@@ -1,1 +1,8 @@
+# These owners will be the default owners for everything in
+# the Howijd Network repos. Unless a later match takes precedence.
+# https://github.com/orgs/howijd/teams/maintainers
 * @howijd/maintainers
+
+# Approval required for workflows
+workflow-templates/* @howijd/maintainers @howijd/security
+.github/* @howijd/maintainers @howijd/security
