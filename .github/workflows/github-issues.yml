@@ -65,10 +65,9 @@ jobs:
           echo "issue #${{ github.event.issue.number }} pull_request #${{ github.event.issue.pull_request }}"
           exit 1
       # just print issue payload
-      - name: issue payload
+      - name: issue info
         run: |
           echo "${{ format('issue #{0} - {1}', github.event.issue.number, github.event.issue.html_url) }}"
-          echo "${{ toJSON(github.event) }}"
       - name: set from github graphql
         id: set-from-github-graphql
         uses: actions/github-script@v4
