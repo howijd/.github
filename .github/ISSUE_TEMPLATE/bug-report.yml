@@ -12,12 +12,12 @@ body:
     validations:
       required: true
 
-  - type: markdown
+  - type: textarea
     id: description
     attributes:
       label: Description
       description: Describe the bug, what happened and what did you expect to happen
-      value: Tell us more!
+      placeholder: Tell us more!
     validations:
       required: true
 
@@ -35,5 +35,5 @@ body:
       description: By submitting this issue, you agree to follow our [Code of Conduct](https://github.com/howijd/.github/blob/main/CODE_OF_CONDUCT.md)
       options:
         - I agree to follow this project's Code of Conduct
-      validations:
-        required: true
+    validations:
+      required: true
