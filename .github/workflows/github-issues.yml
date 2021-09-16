@@ -27,15 +27,15 @@ on:
       # - edited
 
   schedule:
-    - name: "daily"
-      cron: '0 0 * * *' # e.g. 5min */5 * * * *
-
-    - name: hacktoberfest-running
-      cron: '0 0 * 10 *'
-    - name: hacktoberfest-over
-      cron: '0 0 * 10 *'
-    - name: hacktoberfest-test
+    - name: 'hacktoberfest-test'
       cron: '*/5 * * * *'
+    - name: 'daily'
+      cron: '0 0 * * *' # e.g. 5min */5 * * * *
+    - name: 'hacktoberfest-running'
+      cron: '0 0 * 10 *'
+    - name: 'hacktoberfest-over'
+      cron: '0 0 1 11 *'
+
 jobs:
   #############################################################################
   # Workflow pipline triggers
