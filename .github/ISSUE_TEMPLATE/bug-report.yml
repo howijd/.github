@@ -17,7 +17,7 @@ body:
     attributes:
       label: Description
       description: Describe the bug, what happened and what did you expect to happen
-      placeholder: Tell us more!
+      value: Tell us more!
     validations:
       required: true
 

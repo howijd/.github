@@ -17,7 +17,7 @@ body:
     attributes:
       label: Description
       description: Describe the task, what should this task cover.
-      placeholder: Tell us more!
+      value: Tell us more!
     validations:
       required: true
 
