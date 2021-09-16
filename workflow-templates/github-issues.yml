@@ -4,21 +4,21 @@ on:
   issues:
     types:
       - opened
-      - edited
-      - deleted
-      - transferred
+      # - edited
+      # - deleted
+      # - transferred
       - pinned
       - unpinned
       - closed
-      - reopened
-      - assigned
-      - unassigned
-      - labeled
-      - unlabeled
-      - locked
-      - unlocked
-      - milestoned
-      - demilestoned
+      # - reopened
+      # - assigned
+      # - unassigned
+      # - labeled
+      # - unlabeled
+      # - locked
+      # - unlocked
+      # - milestoned
+      # - demilestoned
 
   issue_comment:
     types:
@@ -43,12 +43,6 @@ jobs:
       - if: github.event.action == 'created'
         run: |
           echo "${{ github.event.sender.login }} commented on issue #${{ github.event.issue.number }}"
-      - if: github.event.action == 'deleted'
-        run: |
-          echo "${{ github.event.sender.login }} deleted comment on issue #${{ github.event.issue.number }}"
-      - if: github.event.action == 'edited'
-        run: |
-          echo "${{ github.event.sender.login }} edited comment on issue #${{ github.event.issue.number }}"
 
   # Issues
   issue:
@@ -99,6 +93,7 @@ jobs:
             const { data: zen } = await github.request('GET /zen')
             core.info(zen)
             core.setOutput('zen', zen)
+
   # Schedule
   schedule:
     if: github.event_name == 'schedule'
@@ -110,114 +105,9 @@ jobs:
         run: echo "$GITHUB_CONTEXT"
 
   #############################################################################
-  # Workflow action tricers
-  # These jobs set outputs what (Workflow actors) use to trigger actual actions
+  # Workflow action triggers
+  # These jobs set outputs for (Workflow actors) use to trigger actual actions
   #############################################################################
-
-  noop:
-    runs-on: ubuntu-latest
-    steps:
-      - name: event
-        run: echo "${{ toJSON(github.event) }}"
-
-  edited:
-    runs-on: ubuntu-latest
-    needs:
-      - noop
-      - issue
-    if: github.event.action == 'edited'
-    steps:
-      - run: echo "noop"
-
-  closed:
-    runs-on: ubuntu-latest
-    needs:
-      - noop
-      - issue
-    if: github.event.action == 'closed'
-    steps:
-      - run: echo "noop"
-
-  deleted:
-    runs-on: ubuntu-latest
-    needs:
-      - noop
-      - issue
-    if: github.event.action == 'deleted'
-    steps:
-      - run: echo "noop"
-
-  transferred:
-    runs-on: ubuntu-latest
-    needs:
-      - noop
-      - issue
-    if: github.event.action == 'transferred'
-    steps:
-      - run: echo "noop"
-
-  reopened:
-    runs-on: ubuntu-latest
-    needs:
-      - noop
-      - issue
-    if: github.event.action == 'reopened'
-    steps:
-      - run: echo "noop"
-
-  locked:
-    runs-on: ubuntu-latest
-    needs:
-      - noop
-      - issue
-    if: github.event.action == 'locked'
-    steps:
-      - run: echo "noop"
-
-  unlocked:
-    runs-on: ubuntu-latest
-    needs:
-      - noop
-      - issue
-    if: github.event.action == 'unlocked'
-    steps:
-      - run: echo "noop"
-
-  milestoned:
-    runs-on: ubuntu-latest
-    needs:
-      - noop
-      - issue
-    if: github.event.action == 'milestoned'
-    steps:
-      - run: echo "noop"
-
-  demilestoned:
-    runs-on: ubuntu-latest
-    needs:
-      - noop
-      - issue
-    if: github.event.action == 'demilestoned'
-    steps:
-      - run: echo "noop"
-
-  assigned:
-    runs-on: ubuntu-latest
-    needs:
-      - noop
-      - issue
-    if: github.event.action == 'assigned'
-    steps:
-      - run: echo "noop"
-
-  unassigned:
-    runs-on: ubuntu-latest
-    needs:
-      - noop
-      - issue
-    if: github.event.action == 'unassigned'
-    steps:
-      - run: echo "noop"
 
   # compose automatic comment to add
   compose-comment:
@@ -226,63 +116,46 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       issue_url: ${{ github.event.issue.html_url }}
-      issue_comment: ${{ join(steps.*.outputs.issue_comment, '') }}
+      issue_comment: ${{ join(steps.*.outputs.value, '') }}
     steps:
-
+      -
       - name: greeting on first issue
         id: greeting-on-first-issue
         if: github.event.action == 'opened' && needs.issue.outputs.user-issues-total == 0
-        env:
-          comment: |
+        uses: mkungla/actions-set-text-output@v1
+        with:
+          text: |
             👋 Thanks for reporting @${{ github.event.sender.login }}!
             This your first issue.
             ***
-        run: |
-          comment="${comment//'%'/'%25'}"
-          comment="${comment//$'\n'/'%0A'}"
-          comment="${comment//$'\r'/'%0D'}"
-          echo "::set-output name=issue_comment::$comment"
       - name: greeting for reccuring user
         id: greeting-for-reccuring-user
         if: github.event.action == 'opened' && needs.issue.outputs.user-issues-total > 0
-        env:
-          comment: |
+        uses: mkungla/actions-set-text-output@v1
+        with:
+          text: |
             :boom: Thanks for reporting again @${{ github.event.sender.login }}!
             You have opened total **${{ needs.issue.outputs.user-issues-total }}** issues in this repository.
             ***
-        run: |
-          comment="${comment//'%'/'%25'}"
-          comment="${comment//$'\n'/'%0A'}"
-          comment="${comment//$'\r'/'%0D'}"
-          echo "::set-output name=issue_comment::$comment"
       - name: comment on empty description
         id: comment-on-empty-description
         if: github.event.action == 'opened' && !github.event.issue.body
-        env:
-          comment: |
+        uses: mkungla/actions-set-text-output@v1
+        with:
+          text: |
             Perhaps edit you issue and add some more detail to issue description?
             ***
-        run: |
-          comment="${comment//'%'/'%25'}"
-          comment="${comment//$'\n'/'%0A'}"
-          comment="${comment//$'\r'/'%0D'}"
-          echo "::set-output name=issue_comment::$comment"
       - name: opened issue footer
         id: opened-issue-footer
         if: github.event.action == 'opened'
-        env:
-          comment: |
+        uses: mkungla/actions-set-text-output@v1
+        with:
+          text: |
             Your issue will be reviewed shortly!
             ${{ needs.issue.outputs.zen }}
-            This is automated message by [GitHub Actions][github-actions] configured in [.issues.yml][issues-yml]
-            [github-actions]: https://github.com/features/actions
-            [issues-yml]: https://github.com/mkungla/github-cicd/blob/main/.github/workflows/issues.yml
+            This is automated message by **GitHub Actions**
+
             ***
-        run: |
-          comment="${comment//'%'/'%25'}"
-          comment="${comment//$'\n'/'%0A'}"
-          comment="${comment//$'\r'/'%0D'}"
-          echo "::set-output name=issue_comment::$comment"
 
   # daily schedule
   daily:
@@ -328,15 +201,6 @@ jobs:
         id: on-unpinned-remove-labels
         if: github.event.action == 'unpinned' && contains(github.event.issue.labels.*.name, 'attention')
         run: echo "::set-output name=remove_labels::attention"
-
-        # labels added
-      - name: labeled
-        if: github.event.action == 'labeled'
-        run: echo "labeled"
-        # labels added
-      - name: unlabeled
-        if: github.event.action == 'labeled'
-        run: echo "unlabeled"
 
   #############################################################################
   # Workflow actors
