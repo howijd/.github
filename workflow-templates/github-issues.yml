@@ -75,9 +75,9 @@ jobs:
           script: |
             const user = context.payload.sender.login
             const repo = context.payload.repository.name
-            const owner = context.payload.repository.owner
+            const owner = context.payload.repository.owner.login
             // TOTAL ISSUES
-            const query = `query($user: String, $owner: String, $repo: String) {
+            const query = `query($user: String, $owner: String!, $repo: String!) {
               repository(owner: $owner, name: $repo) {
                 issues(filterBy: {createdBy: $user}) {
                   totalCount
