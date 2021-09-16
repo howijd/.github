@@ -30,6 +30,12 @@ on:
     - name: "daily"
       cron: '0 0 * * *' # e.g. 5min */5 * * * *
 
+    - name: hacktoberfest-running
+      cron: '0 0 * 10 *'
+    - name: hacktoberfest-over
+      cron: '0 0 * 10 *'
+    - name: hacktoberfest-test
+      cron: '*/5 * * * *'
 jobs:
   #############################################################################
   # Workflow pipline triggers
@@ -164,6 +170,15 @@ jobs:
     steps:
       - if: ${{ contains(toJSON(github.event), 'daily') }}
         run: exit 1
+
+  hacktoberfest:
+    needs: schedule
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "${{ toJSON(github.event) }}"
+      # - uses: browniebroke/hacktoberfest-labeler-action@main
+      #   with:
+      #     github_token: ${{ secrets.GITHUB_TOKEN }}
 
   # should add remove labels
   manage-labels:
