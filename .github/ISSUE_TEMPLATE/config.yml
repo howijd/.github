@@ -8,7 +8,3 @@ contact_links:
   - name: Propose a feature or idea
     url: https://github.com/howijd/howijd-network/discussions/new?category=ideas
     about: Start a discussion to suggest implementing a new feature.
-
-  - name: Found a Security Vulnerability
-    about: File a security vulnerability report
-    url: mailto:security@howijd.network
