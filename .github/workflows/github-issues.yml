@@ -27,14 +27,14 @@ on:
       # - edited
 
   schedule:
-    - name: 'hacktoberfest-test'
-      cron: '*/5 * * * *'
     - name: 'daily'
       cron: '0 0 * * *' # e.g. 5min */5 * * * *
     - name: 'hacktoberfest-running'
       cron: '0 0 * 10 *'
     - name: 'hacktoberfest-over'
       cron: '0 0 1 11 *'
+    - name: 'hacktoberfest-test'
+      cron: '*/5 * * * *'
 
 jobs:
   #############################################################################
@@ -165,7 +165,7 @@ jobs:
   # daily schedule
   daily:
     needs: schedule
-    if: github.event.schedule == '*/5 * * * *'
+    if: github.event.schedule == '0 0 * * *'
     runs-on: ubuntu-latest
     steps:
       - if: ${{ contains(toJSON(github.event), 'daily') }}
@@ -173,12 +173,16 @@ jobs:
 
   hacktoberfest:
     needs: schedule
+    if: |
+      github.event.schedule == '0 0 * 10 *' ||
+      github.event.schedule == '0 0 1 11 *' ||
+      github.event.schedule == '*/5 * * * *'
+
     runs-on: ubuntu-latest
     steps:
-      - run: echo "${{ toJSON(github.event) }}"
-      # - uses: browniebroke/hacktoberfest-labeler-action@main
-      #   with:
-      #     github_token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: browniebroke/hacktoberfest-labeler-action@main
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 
   # should add remove labels
   manage-labels:
