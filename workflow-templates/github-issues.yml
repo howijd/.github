@@ -27,13 +27,14 @@ on:
       # - edited
 
   schedule:
-    - name: daily
+    - name: 'daily'
       cron: '0 0 * * *' # e.g. 5min */5 * * * *
-
-    - name: hacktoberfest-running
-      cron: "0 0 * 10 *"
-    - name: hacktoberfest-over
-      cron: "0 13 1 11 *"
+    - name: 'hacktoberfest-running'
+      cron: '0 0 * 10 *'
+    - name: 'hacktoberfest-over'
+      cron: '0 0 1 11 *'
+    - name: 'hacktoberfest-test'
+      cron: '*/5 * * * *'
 
 jobs:
   #############################################################################
@@ -64,27 +65,29 @@ jobs:
           echo "issue #${{ github.event.issue.number }} pull_request #${{ github.event.issue.pull_request }}"
           exit 1
       # just print issue payload
-      - name: issue payload
+      - name: issue info
         run: |
-          echo '::group::${{ format('issue #{0} - {1}', github.event.issue.number, github.event.issue.html_url) }}'
-          echo '${{ toJSON(github.event) }}'
-          echo '::endgroup::'
+          echo "${{ format('issue #{0} - {1}', github.event.issue.number, github.event.issue.html_url) }}"
       - name: set from github graphql
         id: set-from-github-graphql
         uses: actions/github-script@v4
         with:
           script: |
             const user = context.payload.sender.login
+            const repo = context.payload.repository.name
+            const owner = context.payload.repository.owner
             // TOTAL ISSUES
-            const query = `query($user: String) {
-              repository(owner: "mkungla", name: "github-cicd") {
+            const query = `query($user: String, $owner: String, $repo: String) {
+              repository(owner: $owner, name: $repo) {
                 issues(filterBy: {createdBy: $user}) {
                   totalCount
                 }
               }
             }`
             const res = await github.graphql(query, {
-              "user": user
+              "user": user,
+              "repo": repo,
+              "owner": owner,
             })
             core.info(`user: ${user} has total ${res.repository.issues.totalCount} issues`)
             core.setOutput('totalCount', res.repository.issues.totalCount)
@@ -172,12 +175,18 @@ jobs:
 
   hacktoberfest:
     needs: schedule
+    if: |
+      github.event.schedule == '0 0 * 10 *' ||
+      github.event.schedule == '0 0 1 11 *' ||
+      github.event.schedule == '*/5 * * * *'
+
     runs-on: ubuntu-latest
     steps:
-      - run: echo "${{ toJSON(github.event) }}"
-      # - uses: browniebroke/hacktoberfest-labeler-action@main
-      #   with:
-      #     github_token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: browniebroke/hacktoberfest-labeler-action@main
+        continue-on-error: true # topic error - GITHUB_TOKEN do not have permissions
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
 
   # should add remove labels
   manage-labels:

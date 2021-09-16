@@ -74,16 +74,20 @@ jobs:
         with:
           script: |
             const user = context.payload.sender.login
+            const repo = context.payload.repository.name
+            const owner = context.payload.repository.owner.login
             // TOTAL ISSUES
-            const query = `query($user: String) {
-              repository(owner: "mkungla", name: "github-cicd") {
+            const query = `query($user: String, $owner: String!, $repo: String!) {
+              repository(owner: $owner, name: $repo) {
                 issues(filterBy: {createdBy: $user}) {
                   totalCount
                 }
               }
             }`
             const res = await github.graphql(query, {
-              "user": user
+              "user": user,
+              "repo": repo,
+              "owner": owner,
             })
             core.info(`user: ${user} has total ${res.repository.issues.totalCount} issues`)
             core.setOutput('totalCount', res.repository.issues.totalCount)
