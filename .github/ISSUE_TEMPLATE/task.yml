@@ -1,5 +1,5 @@
 name: New task
-description: Do not find right form to post? NP open just a regular task
+description: Do not find right premade form to open your github issue? No problem you can just  open a regular task.
 labels: [triage]
 
 body:
