@@ -27,3 +27,10 @@ Here are a few things you can do that will increase the likelihood of your pull 
 
 - [How to Contribute to Open Source](https://opensource.guide/how-to-contribute/)
 - [Using Pull Requests](https://help.github.com/articles/about-pull-requests/)
+
+## You may find some good first issues here
+
+- https://github.com/howijd/howijd/contribute
+- https://github.com/howijd/howijd.org/contribute
+- https://github.com/howijd/howi/contribute
+- https://github.com/howijd/howijd.com/contribute
