@@ -118,7 +118,6 @@ jobs:
       issue_url: ${{ github.event.issue.html_url }}
       issue_comment: ${{ join(steps.*.outputs.value, '') }}
     steps:
-      -
       - name: greeting on first issue
         id: greeting-on-first-issue
         if: github.event.action == 'opened' && needs.issue.outputs.user-issues-total == 0
