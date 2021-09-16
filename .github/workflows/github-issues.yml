@@ -67,9 +67,9 @@ jobs:
       # just print issue payload
       - name: issue payload
         run: |
-          echo '::group::${{ format('issue #{0} - {1}', github.event.issue.number, github.event.issue.html_url) }}'
-          echo '${{ toJSON(github.event) }}'
-          echo '::endgroup::'
+          echo "::group::${{ format('issue #{0} - {1}', github.event.issue.number, github.event.issue.html_url) }}"
+          echo "${{ toJSON(github.event) }}"
+          echo "::endgroup::"
       - name: set from github graphql
         id: set-from-github-graphql
         uses: actions/github-script@v4
