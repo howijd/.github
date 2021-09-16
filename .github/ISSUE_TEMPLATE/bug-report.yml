@@ -10,9 +10,9 @@ body:
       description: Short summary about the bug you are reporting
       placeholder: ex. Problem with x...
     validations:
-      required: false
+      required: true
 
-  - type: textarea
+  - type: markdown
     id: description
     attributes:
       label: Description
@@ -28,11 +28,12 @@ body:
       description: Please copy and paste any relevant log output. This will be automatically formatted into code, so no need for backticks.
       render: shell
 
-  - type: checkboxes
+  - type: dropdown
     id: terms
     attributes:
       label: Code of Conduct
-      description: By submitting this issue, you agree to follow our [Code of Conduct](.github/CODE_OF_CONDUCT.md)
+      description: By submitting this issue, you agree to follow our [Code of Conduct](https://github.com/howijd/.github/blob/main/CODE_OF_CONDUCT.md)
       options:
         - label: I agree to follow this project's Code of Conduct
           required: true
+

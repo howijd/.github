@@ -10,9 +10,9 @@ body:
       description: Short summary about the task.
       placeholder: ex. This should be enhanced...
     validations:
-      required: false
+      required: true
 
-  - type: textarea
+  - type: markdown
     id: description
     attributes:
       label: Description
@@ -21,17 +21,18 @@ body:
     validations:
       required: true
 
-  - type: textarea
+  - type: markdown
     id: logs-code
     attributes:
       label: Aditional context
       description: Provide aditional context if needed like aditional resources, links etc.
 
-  - type: checkboxes
+  - type: dropdown
     id: terms
     attributes:
       label: Code of Conduct
-      description: By submitting this issue, you agree to follow our [Code of Conduct](.github/CODE_OF_CONDUCT.md)
+      description: By submitting this issue, you agree to follow our [Code of Conduct](https://github.com/howijd/.github/blob/main/CODE_OF_CONDUCT.md)
       options:
         - label: I agree to follow this project's Code of Conduct
           required: true
+
