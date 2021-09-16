@@ -181,8 +181,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: browniebroke/hacktoberfest-labeler-action@main
+        continue-on-error: true # topic error - GITHUB_TOKEN do not have permissions
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+
 
   # should add remove labels
   manage-labels:
