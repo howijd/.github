@@ -1,0 +1,37 @@
+name: New task
+description: Do not find right form to post? NP open just a regular task
+labels: [triage]
+
+body:
+  - type: input
+    id: summary
+    attributes:
+      label: Task summary
+      description: Short summary about the task.
+      placeholder: ex. This should be enhanced...
+    validations:
+      required: false
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Describe the task, what should this task cover.
+      placeholder: Tell us more!
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs-code
+    attributes:
+      label: Aditional context
+      description: Provide aditional context if needed like aditional resources, links etc.
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      description: By submitting this issue, you agree to follow our [Code of Conduct](.github/CODE_OF_CONDUCT.md)
+      options:
+        - label: I agree to follow this project's Code of Conduct
+          required: true
