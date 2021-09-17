@@ -6,6 +6,22 @@ Contributions to this project are released to the public under the project's ope
 
 Please note that this project is released with a Contributor Code of Conduct. By participating in this project you agree to abide by its terms.
 
+## Workflow related labels
+
+An version a large set of requirements planed for that version in roadmap.
+It is simply the list of features and tasks that need to be done within that **version**.
+Version are defined as GitHub projects at https://github.com/orgs/howijd/projects
+
+**feature**
+
+Feature belongs to **version** and defines feature either existing or one to be implemented.  
+Similar to Scrum User Stories **feature** should be well aligned description with general goals  
+of the project.
+
+**task**
+
+Task belongs to **feature** and is just simply a detailed task.
+
 ## Submitting a pull request
 
 - Fork and clone the repository
