@@ -1,14 +1,23 @@
+#############################################################################
+# NOTICE!
+# You should not modify this file in this repository. This Workflow file
+# is tested with workflow found at:
+# https://github.com/howijd/.github/blob/main/.github/workflows/github-issues.yml
+#
+# And opens self update pull request if base template is updated at:
+# /home/mkungla/workspaces/howijd/repos/.github/workflow-templates/github-issues.yml
+#############################################################################
 name: GitHub issues
 
 on:
-  # ONLY THIS .github REPO TO DISPATCH FOR OTHER REPOS
+  # RUNS ONLY IN .github REPO TO DISPATCH FOR OTHER REPOS
   push:
     branches:
       # Push events on main branch
       - main
     paths:
       - 'workflow-templates/github-issues.yml'
-  # / ONLY THIS .github REPO TO DISPATCH FOR OTHER REPOS
+  # / RUNS ONLY IN .github REPO TO DISPATCH FOR OTHER REPOS
   issues:
     types:
       - opened
@@ -42,9 +51,22 @@ on:
     - name: 'hacktoberfest-over'
       cron: '0 0 1 11 *'
 
-
+  repository_dispatch:
+    types:
+      - workflow-file-github-issues
 
 jobs:
+  #############################################################################
+  # SELF UPDATE
+  #############################################################################
+  update:
+    if: |
+      github.event_name == 'repository_dispatch' &&
+      github.event.action == 'workflow-file-github-issues'
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "update"
+
   #############################################################################
   # Workflow pipline triggers
   # add pipline entrypoint based on event or multiple conditions
@@ -359,10 +381,12 @@ jobs:
           days-before-pr-stale : -1
           days-before-pr-close: -1
 
-  # ONLY THIS .github REPO TO DISPATCH FOR OTHER REPOS
+  # SHOULD RUN ONLY IN .github REPO TO DISPATCH FOR OTHER REPOS
   dipatch-update:
     runs-on: ubuntu-latest
-    if: github.event_name == 'push'
+    if: |
+      github.event_name == 'push' &&
+      $GITHUB_REPOSITORY == 'howijd/.github'
     strategy:
       matrix:
         repo:
@@ -374,4 +398,4 @@ jobs:
           repository: ${{ matrix.repo }}
           event-type: workflow-file-github-issues
 
-  # / ONLY THIS .github REPO TO DISPATCH FOR OTHER REPOS
+  # / SHOULD RUN ONLY IN .github REPO TO DISPATCH FOR OTHER REPOS
