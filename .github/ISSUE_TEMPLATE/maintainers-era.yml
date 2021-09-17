@@ -1,5 +1,5 @@
-name: HNERA
-description: Form to draft new howijd.network era
+name: maintainers - (hnera) template
+description: (Maintainers Only!) Form to draft new howijd.network era.
 title: "ERA NAME ?"
 labels: [era, draft]
 assignees:
@@ -31,7 +31,7 @@ body:
     type: input
     attributes:
       label: 'Start:'
-      description: Date when era API definition and features will be soft locked.
+      description: Start date or when era API definitions and features will be soft locked.
       placeholder: 'dd.mm.yyyy || TBD'
     validations:
       required: true
@@ -45,12 +45,12 @@ body:
     validations:
       required: true
 
-  - type: textarea
-    id: abstract
+  - type: input
+    id: era-discussion-link
     attributes:
-      label: The Abstract
-      value: |
-        Abstracts are important because they give a first impression of the era!
+      label: 'Discussions:'
+      description: Community discussions around this era.
+      placeholder: 'link to discussion category'
     validations:
       required: true
 
@@ -63,14 +63,13 @@ body:
       required: true
 
   - type: textarea
-    id: resource-links
+    id: abstract
     attributes:
-      label: Resources
-      description: Relevant resources.
+      label: The Abstract
       value: |
-        | link | description |
-        | --- | --- |
-        | ... | ... |
+        Abstracts are important because they give a first impression of the era!
+    validations:
+      required: true
 
   - type: textarea
     id: hnmiles
@@ -79,3 +78,22 @@ body:
       description: List of related milestones under this era.
       value: |
         - [ ] ... # e.g howiijd/howiijd.org#x
+    validations:
+      required: true
+
+  - type: textarea
+    id: resource-links
+    attributes:
+      label: Resources
+      description: Relevant resources and links.
+      value: |
+        | resources | description |
+        | --- | --- |
+        | ... | ... |
+    validations:
+      required: true
+
+  - type: markdown
+    attributes:
+      value: |
+        After creation please lock comments for that issue, since discussion is place where interactions should happen.
