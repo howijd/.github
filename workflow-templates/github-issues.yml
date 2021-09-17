@@ -395,5 +395,3 @@ jobs:
           token: ${{ secrets.MKUNGLA_PUBLIC_REPO_TOKEN }}
           repository: ${{ matrix.repo }}
           event-type: workflow-file-github-issues
-
-
