@@ -1,6 +1,14 @@
 name: GitHub issues
 
 on:
+  # ONLY THIS .github REPO TO DISPATCH FOR OTHER REPOS
+  push:
+    branches:
+      # Push events on main branch
+      - main
+    paths:
+      - 'workflow-templates/github-issues.yml'
+  # / ONLY THIS .github REPO TO DISPATCH FOR OTHER REPOS
   issues:
     types:
       - opened
@@ -33,6 +41,8 @@ on:
       cron: '0 0 * 10 *'
     - name: 'hacktoberfest-over'
       cron: '0 0 1 11 *'
+
+
 
 jobs:
   #############################################################################
@@ -349,3 +359,19 @@ jobs:
           days-before-pr-stale : -1
           days-before-pr-close: -1
 
+  # ONLY THIS .github REPO TO DISPATCH FOR OTHER REPOS
+  dipatch-update:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+    strategy:
+      matrix:
+        repo:
+          - howijd/howijd.network
+    steps:
+      - uses: peter-evans/repository-dispatch@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ matrix.repo }}
+          event-type: workflow-file-github-issues
+
+  # / ONLY THIS .github REPO TO DISPATCH FOR OTHER REPOS
