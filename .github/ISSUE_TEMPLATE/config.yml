@@ -2,9 +2,9 @@ blank_issues_enabled: true
 
 contact_links:
   - name: Have a question?
-    url: https://github.com/howijd/howijd-network/discussions/new?category=questions
+    url: https://github.com/howijd/howijd.network/discussions/new?category=questions
     about: Search for discussions or ask your question.
 
   - name: Propose a feature or idea
-    url: https://github.com/howijd/howijd-network/discussions/new?category=ideas
+    url: https://github.com/howijd/howijd.network/discussions/new?category=ideas
     about: Start a discussion to suggest implementing a new feature.
