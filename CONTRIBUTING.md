@@ -1,26 +1,17 @@
-## Contributing
+# Contributing Guidelines
 
-Hi there! We're thrilled that you'd like to contribute to this project. Your help is essential for keeping it great.
+Hi there! We're thrilled that you'd like to contribute to this project. Your   
+help is essential for keeping it great. Contributions to [howijd.network]  
+projects coverned by this contributing guideline here are released to  
+the public under open source license's. Each project however can set LICENCE  
+individually aswell can compliment this contributing guideline - therefore  
+ensure that you read also project documentation, how-to's when getting started.
 
-Contributions to this project are released to the public under the project's open source license.
+Please note that [howijd.network] projects are released with a [Contributor Code of Conduct.](howijd-coc)  
+By participating in this project you agree to abide by its terms.
 
-Please note that this project is released with a Contributor Code of Conduct. By participating in this project you agree to abide by its terms.
-
-## Workflow related labels
-
-An version a large set of requirements planed for that version in roadmap.
-It is simply the list of features and tasks that need to be done within that **version**.
-Version are defined as GitHub projects at https://github.com/orgs/howijd/projects
-
-**feature**
-
-Feature belongs to **version** and defines feature either existing or one to be implemented.  
-Similar to Scrum User Stories **feature** should be well aligned description with general goals  
-of the project and should contain list of tasks which are within a scope of more specific feature.
-
-**task**
-
-Task belongs to **feature** and is just simply a detailed task.
+[howijd.network]: https://howijd.network
+[howijd-coc]: repos/.github/CODE_OF_CONDUCT.md
 
 ## Submitting a pull request
 
@@ -39,14 +30,14 @@ Here are a few things you can do that will increase the likelihood of your pull 
   that are not dependent upon each other, consider submitting them as separate pull requests.
 - Write a [good commit message](http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html).
 
-## Resources
-
-- [How to Contribute to Open Source](https://opensource.guide/how-to-contribute/)
-- [Using Pull Requests](https://help.github.com/articles/about-pull-requests/)
-
 ## You may find some good first issues here
 
 - https://github.com/howijd/howijd/contribute
 - https://github.com/howijd/howijd.org/contribute
 - https://github.com/howijd/howi/contribute
 - https://github.com/howijd/howijd.com/contribute
+
+## Resources
+
+- [How to Contribute to Open Source](https://opensource.guide/how-to-contribute/)
+- [Using Pull Requests](https://help.github.com/articles/about-pull-requests/)
