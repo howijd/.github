@@ -1,13 +1,13 @@
-name: New task
-description: Do not find right premade form to open your github issue? No problem you can just  open a regular task.
+name: New issue
+description: Do not find right premade form to open your github issue? No problem you can just  open a regular issue.
 labels: [triage]
 
 body:
   - type: input
     id: summary
     attributes:
-      label: Task summary
-      description: Short summary about the task.
+      label: Issue summary
+      description: Short summary about the issue.
       placeholder: ex. This should be enhanced...
     validations:
       required: true
@@ -16,7 +16,7 @@ body:
     id: description
     attributes:
       label: Description
-      description: Describe the task, what should this task cover.
+      description: Describe the issue, what this issue covers.
       placeholder: Tell us more!
     validations:
       required: true
