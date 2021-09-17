@@ -387,6 +387,7 @@ jobs:
           signoff: true
           branch: patch/github-issues.yml
           delete-branch: true
+          base: main
           title: update github-issues.yml based on upstream
           body: |
             **NOTICE!**
