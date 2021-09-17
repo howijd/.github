@@ -16,7 +16,7 @@ Version are defined as GitHub projects at https://github.com/orgs/howijd/project
 
 Feature belongs to **version** and defines feature either existing or one to be implemented.  
 Similar to Scrum User Stories **feature** should be well aligned description with general goals  
-of the project.
+of the project and should contain list of tasks which are within a scope of more specific feature.
 
 **task**
 

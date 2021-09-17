@@ -33,8 +33,6 @@ on:
       cron: '0 0 * 10 *'
     - name: 'hacktoberfest-over'
       cron: '0 0 1 11 *'
-    - name: 'hacktoberfest-test'
-      cron: '*/5 * * * *'
 
 jobs:
   #############################################################################
@@ -209,11 +207,6 @@ jobs:
         if: github.event.action == 'opened' && !contains(github.event.issue.labels.*.name, 'triage')
         run: echo "::set-output name=add_labels::triage"
 
-      # - name: belongs to feature
-      #   id: on-open-add-labels
-      #   if: github.event.action == 'opened' && !contains(github.event.issue.labels.*.name, 'feature')
-      #   run: echo "::set-output name=add_labels::task"
-
       - name: on potential question
         id: on-potential-question
         if: github.event.action == 'opened' && endsWith(github.event.issue.title, '?')
@@ -233,6 +226,32 @@ jobs:
         id: on-unpinned-remove-labels
         if: github.event.action == 'unpinned' && contains(github.event.issue.labels.*.name, 'attention')
         run: echo "::set-output name=remove_labels::attention"
+
+      - name: belongs to feature
+        if: github.event.action == 'opened'
+        id: belongs-to-feature
+        uses: actions/github-script@v4
+        with:
+          script: |
+            const events = await github.issues.listEventsForTimeline({
+              owner: context.payload.repository.owner.login,
+              repo: context.payload.repository.name,
+              issue_number: context.issue.number,
+            })
+
+            const pi = events.data.filter((item) =>
+              (item.event === 'cross-referenced' && item.source))
+
+            if (pi.length === 0) {
+              return
+            }
+
+            const belongs = pi.filter((item) => item.source.issue.labels
+              .filter((label) => label.name.toLowerCase() === 'feature').length > 0)
+
+            if (belongs.length > 0) {
+              core.setOutput('add_labels', 'task')
+            }
 
   #############################################################################
   # Workflow actors
