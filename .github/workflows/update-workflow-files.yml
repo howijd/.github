@@ -30,12 +30,12 @@ jobs:
           - howijd/howijd.com
           - howijd/howi
     env:
-      PWD: /home/runner/work/{{ matrix.repo }}
+      PRWORK: /home/runner/work/{{ matrix.repo }}
     steps:
       - run: |
-          echo $PWD
-          mkdir -p $PWD
-          cd $PWD
+          echo $PRWORK
+          mkdir -p $PRWORK
+          cd $PRWORK
           pwd
 
   # update:
