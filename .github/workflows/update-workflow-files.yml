@@ -11,10 +11,29 @@ on:
 jobs:
   update:
     runs-on: ubuntu-latest
+    outputs:
+      github-issues: ${{ steps.workflow-files.outputs.github-issues }}
     steps:
       - uses: actions/checkout@v2
+      - id: workflow-files
+        run: |
+          echo ::set-output name=github-issues::$(cat workflow-templates/github-issues.yml)
+
+  open-pullrequests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        repo:
+          - howijd/howijd.network
+          - howijd/howijd.org
+          - howijd/howijd.com
+          - howijd/howi
+    defaults:
+      run:
+        shell: bash
+        working-directory: ${{ matrix.repo }}
+    steps:
       - run: pwd
-      - run: echo "${{ toJSON(github) }}"
 
   # update:
   #   runs-on: ubuntu-latest
@@ -46,10 +65,7 @@ jobs:
   #   strategy:
   #     matrix:
   #       repo:
-  #         - howijd/howijd.network
-  #         - howijd/howijd.org
-  #         - howijd/howijd.com
-  #         - howijd/howi
+
   #   steps:
   #     - uses: peter-evans/repository-dispatch@v1
   #       with:
