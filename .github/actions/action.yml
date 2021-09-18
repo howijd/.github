@@ -1,0 +1,26 @@
+name: Update Workflow files
+description: Update workflow files and create pull requests
+inputs:
+  repository:
+    description: 'Repository to check and ope pr agains if needed'
+    required: true
+  ref:
+    description: |
+      The branch, tag or SHA to checkout. When checking out the repository that
+      triggered a workflow, this defaults to the reference or SHA for that
+      event. Otherwise, uses the default branch.
+
+
+runs:
+  using: "composite"
+  steps:
+    # target repo
+    - uses: actions/checkout@v2
+        with:
+          repository: ${{ matrix.repo }}
+          ref: ${{ inputs.ref }}
+          path: /home/runner/work/${{ inputs.repository }}
+
+    - working-directory: /home/runner/work/${{ inputs.repository }}
+      run: pwd
+      shell: bash
