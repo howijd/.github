@@ -1,7 +1,10 @@
 name: maintainers - (hnera) template
 description: (Maintainers Only!) Form to draft new howijd.network era.
-title: "ERA NAME ?"
-labels: [era, draft]
+title: "e.g. Okram era"
+labels:
+  - hn/era
+  - draft
+
 assignees:
   - howijd/maintainers
 body:
@@ -13,8 +16,9 @@ body:
   - id: slogan
     type: input
     attributes:
-      label: Slogan
+      label: Slogan or tagline
       description: short description or slogan for this era.
+      placeholder: '# ...'
     validations:
       required: true
 
