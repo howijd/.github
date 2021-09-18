@@ -6,7 +6,7 @@ on:
       - main
     paths:
       - '.github/workflows/manage-labels.yml'
-      - '.github/actions/update-workflow-files/action.yml'
+      - 'manage-your-labels.yml'
 
 
 jobs:
