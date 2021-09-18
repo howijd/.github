@@ -29,10 +29,11 @@ jobs:
           - howijd/howijd.org
           - howijd/howijd.com
           - howijd/howi
+    name: ${{ matrix.repo }}
     env:
-      PWD: /home/runner/work/${{ matrix.repo }}
+      PRPWD: /home/runner/work/${{ matrix.repo }}
     steps:
-      - run: mkdir -p $PWD && cd $PWD && pwd
+      - run: mkdir -p $PRPWD && cd $PRPWD && pwd
 
   # update:
   #   runs-on: ubuntu-latest
