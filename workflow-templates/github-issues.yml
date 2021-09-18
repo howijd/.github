@@ -415,8 +415,8 @@ jobs:
           body: |
             **NOTICE!**
 
-            This Workflow file is tested with [this workflow](https://github.com/howijd/.github/blob/main/.github/workflows/github-issues.yml)
-            And based on this [workflow file](https://github.com/howijd/.github/blob/main/workflow-templates/github-issues.yml)
+            This Workflow file is tested with [.github/workflows/github-issues.yml](https://github.com/howijd/.github/blob/main/.github/workflows/github-issues.yml)
+            And based on this [workflow-templates/github-issues.yml](https://github.com/howijd/.github/blob/main/workflow-templates/github-issues.yml)
           labels: enhancement
 
   # SHOULD RUN ONLY IN .github REPO TO DISPATCH FOR OTHER REPOS
