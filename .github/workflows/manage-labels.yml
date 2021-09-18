@@ -18,4 +18,4 @@ jobs:
       BOT_TOKEN: ${{ secrets.HOWIBOT_GITHUB_TOKEN }}
     steps:
       - name: manage-your-labels
-        uses: actions-automation/manage-your-labels@0.1.0
+        uses: actions-automation/manage-your-labels@main
