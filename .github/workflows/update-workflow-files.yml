@@ -32,7 +32,11 @@ jobs:
     env:
       PWD: /home/runner/work/{{ matrix.repo }}
     steps:
-      - run: mkdir -p $PWD && cd $PWD && pwd
+      - run: |
+          echo $PWD
+          mkdir -p $PWD
+          cd $PWD
+          pwd
 
   # update:
   #   runs-on: ubuntu-latest
