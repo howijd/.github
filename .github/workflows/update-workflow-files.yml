@@ -32,9 +32,9 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: ${{ matrix.repo }}
+        working-directory: /home/runner/work/{{ matrix.repo }}
     steps:
-      - run: pwd
+      - run: mkdir -p $PWD && pwd
 
   # update:
   #   runs-on: ubuntu-latest
