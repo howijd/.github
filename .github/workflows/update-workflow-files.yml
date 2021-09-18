@@ -4,6 +4,7 @@ on:
   # RUNS ONLY IN .github REPO TO DISPATCH FOR OTHER REPOS
   push:
     paths:
+      - '.github/workflows/update-workflow-files.yml'
       - 'workflow-templates/**.yml'
   # / RUNS ONLY IN .github REPO TO DISPATCH FOR OTHER REPOS
 
