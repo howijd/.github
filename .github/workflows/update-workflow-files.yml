@@ -1,4 +1,4 @@
-name: Workflow files update
+name: Update Workflow files
 
 on:
   # RUNS ONLY IN .github REPO TO DISPATCH FOR OTHER REPOS
@@ -10,7 +10,6 @@ on:
 jobs:
   update:
     runs-on: ubuntu-latest
-    strategy:
     steps:
       - run: echo "toJSON(github)"
 
