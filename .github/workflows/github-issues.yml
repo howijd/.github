@@ -206,7 +206,6 @@ jobs:
       - if: ${{ contains(toJSON(github.event), 'weekly') }}
         run: exit 1
 
-
   hacktoberfest:
     needs: schedule
     if: |

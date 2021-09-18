@@ -1,0 +1,67 @@
+LABEL_GROUPS:
+  DEFAULT:
+    automation:
+      description: This issue or pr is produced by automation
+      color: fef2c0
+    bug:
+      description: Something isn't working
+      color: d73a4a
+    documentation:
+      description: Improvements or additions to documentation
+      color: 0075ca
+    draft:
+      description: This is draft
+      color: FEECD9
+    duplicate:
+      description: This issue or pull request already exists
+      color: cfd3d7
+    enhancement:
+      description: Enhancement of existing behaviour
+      color: a2eeef
+    feature:
+      description: Feature request
+      color: 0CA8F5
+    good first issue:
+      description: Good for newcomers
+      color: 40AA6B
+    hacktoberfest:
+      description: Good issues for Hacktoberfest
+      color: ffa663
+    help wanted:
+      description: Extra attention is needed
+      color: DFDE3C
+    invalid:
+      description: This doesn't seem right
+      color: 2A1B12
+    research:
+      description: ''
+      color: ed8661
+    security:
+      description: Issues that have security implications
+      color: ff0000
+    triage:
+      description: Waiting for triage
+      color: bfd4f2
+
+  howijd:
+    hn/era:
+      description: howijd.network era
+      color: E88430
+    hn/mile:
+      description: howijd.network milestone
+      color: 99A663
+    hn/task:
+      description: howijd.network task
+      color: 55889F
+
+REPOS:
+  .github:
+    - howijd
+  howijd.network:
+    - howijd
+  howijd.org:
+    - howijd
+  howijd.com:
+    - howijd
+  howi:
+    - howijd
