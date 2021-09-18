@@ -42,7 +42,6 @@ LABEL_GROUPS:
     triage:
       description: Waiting for triage
       color: bfd4f2
-
   howijd:
     hn/era:
       description: howijd.network era
@@ -53,10 +52,7 @@ LABEL_GROUPS:
     hn/task:
       description: howijd.network task
       color: 55889F
-
 REPOS:
-  .github:
-    - howijd
   howijd.network:
     - howijd
   howijd.org:
