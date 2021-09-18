@@ -1,8 +1,12 @@
 name: Update Workflow files
 description: Update workflow files and create pull requests
+
 inputs:
   repository:
     description: 'Repository to check and ope pr agains if needed'
+    required: true
+  token:
+    description: 'tooooooooken'
     required: true
   ref:
     description: |
@@ -10,17 +14,37 @@ inputs:
       triggered a workflow, this defaults to the reference or SHA for that
       event. Otherwise, uses the default branch.
 
-
 runs:
   using: "composite"
   steps:
     # target repo
     - uses: actions/checkout@v2
-        with:
-          repository: ${{ matrix.repo }}
-          ref: ${{ inputs.ref }}
-          path: /home/runner/work/${{ inputs.repository }}
+      with:
+        repository: ${{ inputs.repository }}
+        ref: ${{ inputs.ref }}
+        path: ${{ inputs.repository }}
 
-    - working-directory: /home/runner/work/${{ inputs.repository }}
-      run: pwd
+    - run: for dest in ${{ inputs.repository }}/.github/workflows/*.yml; do fname="$(basename $dest)"; src="./src/workflow-templates/$fname"; if test -f $src; then cp -fr $src $dest; fi done
       shell: bash
+
+    - uses: peter-evans/create-pull-request@v3.10.1
+      with:
+        path: ${{ inputs.repository }}
+        token: ${{ inputs.token }}
+        author: '${{ github.event.head_commit.author.name }} <${{ github.event.head_commit.author.email }}>'
+        commit-message: ${{ github.event.head_commit.message }}
+        signoff: true
+        committer: HOWI BOT <howi@howijd.network>
+        base: main
+        branch: patch/github-workflows
+        delete-branch: true
+        labels: enhancement,automation
+        team-reviewers: maintainers
+        title: update workflow files from .github
+        body: |
+          Workflow files are tested in [howijd/.github](https://github.com/howijd/.github)
+
+          **commit which triggered this pull request**
+
+          commit: ${{ github.event.head_commit.url }}
+          timestamp: ${{ github.event.head_commit.timestamp }}
