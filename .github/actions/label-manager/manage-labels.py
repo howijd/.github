@@ -1,4 +1,14 @@
 #!/usr/bin/python3
+# based on
+# https://github.com/actions-automation/manage-your-labels
+# base commit:
+# https://github.com/actions-automation/manage-your-labels/commit/08ca6a139b807f638d2f40826a805321d5a4187d
+# released under
+# Apache License 2.0
+# changes:
+# - config yml schema
+# - action inputs
+# - allow on push,
 from githubgql import githubgql
 
 import sys
@@ -61,9 +71,6 @@ mutation($input: DeleteLabelInput!) {
 }
 '''
 
-if os.environ["GITHUB_EVENT_NAME"] not in {"schedule", "workflow_dispatch"}:
-    sys.exit(0)
-
 owner, repo = os.environ["GITHUB_REPOSITORY"].split("/")
 
 if repo != ".github":
@@ -80,8 +87,8 @@ token = sys.argv[2]
 with open(sys.argv[1]) as f:
     input = yaml.safe_load(f)
 
-LABEL_GROUPS = input["LABEL_GROUPS"]
-REPOS = input["REPOS"]
+GROUPS = input["groups"]
+REPOS = input["repositories"]
 
 # Fetch repository data.
 try:
@@ -100,10 +107,10 @@ for repo in result["organization"]["repositories"]["nodes"]:
     current_labels = {}
     try:
         for group in REPOS[repo['name']]:
-            current_labels.update(LABEL_GROUPS[group])
+            current_labels.update(GROUPS[group])
     except:
         pass
-    current_labels.update(LABEL_GROUPS["DEFAULT"])
+    current_labels.update(GROUPS["default"])
     current_labels_names = {l for l in current_labels.keys()}
 
     # Get the existing set of labels on the repo.

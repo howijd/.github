@@ -10,7 +10,7 @@ on:
 
 
 jobs:
-  manage-your-labels:
+  manage-labels:
     runs-on: ubuntu-latest
     if: github.event_name == 'push' && github.repository == 'howijd/.github'
     steps:

@@ -1,5 +1,5 @@
-LABEL_GROUPS:
-  DEFAULT:
+groups:
+  default:
     automation:
       description: This issue or pr is produced by automation
       color: fef2c0
@@ -52,7 +52,8 @@ LABEL_GROUPS:
     hn/task:
       description: howijd.network task
       color: 55889F
-REPOS:
+
+repositories:
   howijd.network:
     - howijd
   howijd.org:
