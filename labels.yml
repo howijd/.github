@@ -48,6 +48,9 @@ groups:
     triage:
       description: Waiting for triage
       color: bfd4f2
+    support:
+      description: This is issue is rather question or supoort request
+      color: C8DC3C
   howijd:
     hn/era:
       description: howijd.network era

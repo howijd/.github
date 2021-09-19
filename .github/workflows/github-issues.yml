@@ -22,8 +22,8 @@ on:
       # - reopened
       # - assigned
       # - unassigned
-      # - labeled
-      # - unlabeled
+      - labeled
+      - unlabeled
       # - locked
       # - unlocked
       # - milestoned
@@ -44,9 +44,6 @@ on:
       cron: '0 0 * 10 *'
     - name: 'hacktoberfest-over'
       cron: '0 0 1 11 *'
-  repository_dispatch:
-    types:
-      - workflow-file-github-issues
 
 jobs:
   #############################################################################
@@ -69,9 +66,10 @@ jobs:
     outputs:
       user-issues-total: ${{ steps.set-from-github-graphql.outputs.totalCount }}
       zen: ${{ steps.set-from-github-api.outputs.zen }}
-      issue-is-era: contains(github.event.issue.labels.*.name, 'hn/era')
-      issue-is-mile: contains(github.event.issue.labels.*.name, 'hn/mile')
-      issue-is-task: contains(github.event.issue.labels.*.name, 'hn/task')
+      issue-is-era: ${{ toJSON(contains(github.event.issue.labels.*.name, 'hn/era')) }}
+      issue-is-mile: ${{ toJSON(contains(github.event.issue.labels.*.name, 'hn/mile')) }}
+      issue-is-story: ${{ toJSON(contains(github.event.issue.labels.*.name, 'hn/story')) }}
+      issue-is-task: ${{ toJSON(contains(github.event.issue.labels.*.name, 'hn/task')) }}
     steps:
       # no pull request should trugger this job
       - name: is pull request
@@ -161,9 +159,10 @@ jobs:
       - issue
     runs-on: ubuntu-latest
     if: |
-      !needs.issue.outputs.issue-is-era &&
-      !needs.issue.outputs.issue-is-mile &&
-      !needs.issue.outputs.issue-is-task
+      !fromJSON(needs.issue.outputs.issue-is-era) &&
+      !fromJSON(needs.issue.outputs.issue-is-mile)  &&
+      !fromJSON(needs.issue.outputs.issue-is-story)  &&
+      !fromJSON(needs.issue.outputs.issue-is-task)
     outputs:
       issue_url: ${{ github.event.issue.html_url }}
       issue_comment: ${{ join(steps.*.outputs.value, '') }}
@@ -211,9 +210,10 @@ jobs:
     needs:
       - issue
     if: |
-      !needs.issue.outputs.issue-is-era &&
-      !needs.issue.outputs.issue-is-mile &&
-      !needs.issue.outputs.issue-is-task
+      !fromJSON(needs.issue.outputs.issue-is-era) &&
+      !fromJSON(needs.issue.outputs.issue-is-mile)  &&
+      !fromJSON(needs.issue.outputs.issue-is-story) &&
+      !fromJSON(needs.issue.outputs.issue-is-task)
     runs-on: ubuntu-latest
     outputs:
       add_labels: ${{ join(steps.*.outputs.add_labels, ',') }}
@@ -321,12 +321,24 @@ jobs:
     runs-on: ubuntu-latest
     if: join(needs.*.outputs.remove_labels, ',') != ''
     env:
-      add_labels: ${{ join(needs.*.outputs.remove_labels, ',') }}
+      remove_labels: ${{ join(needs.*.outputs.remove_labels, ',') }}
     steps:
       - name: remove labels
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: gh issue edit ${{ github.event.issue.html_url }} --remove-label "${{ env.remove_labels }}"
+
+  label-commenter:
+    needs:
+      - manage-labels
+    if: github.event.action == 'labeled' || github.event.action == 'unlabeled'
+    runs-on: ubuntu-latest
+    steps:
+      - run: wget -N -P . https://raw.githubusercontent.com/howijd/.github/main/label-commenter-config.yml
+      - name: Label commenter
+        uses: peaceiris/actions-label-commenter@v1
+        with:
+          config_file: ./label-commenter-config.yml
 
   # add reactions
   reaction:
@@ -398,12 +410,16 @@ jobs:
   # should issue be locked
   lock:
     runs-on: ubuntu-latest
+    needs:
+      - issue
     if: |
       github.event_name == 'issues' &&
-      needs.issue.outputs.issue-is-era &&
-      needs.issue.outputs.issue-is-mile &&
-      github.event.action == 'opened'
+      github.event.action == 'opened' &&
+      (fromJSON(needs.issue.outputs.issue-is-era) || fromJSON(needs.issue.outputs.issue-is-mile))
     steps:
+      - run: |
+          echo "${{ needs.issue.outputs.issue-is-era }}"
+          echo "${{ needs.issue.outputs.issue-is-mile }}"
       - name: set from github api
         id: set-from-github-api
         uses: actions/github-script@v4
@@ -416,5 +432,21 @@ jobs:
               issue_number: context.issue.number,
             })
             } catch (e) {
-              core.warn(`Action failed. Could not lock issue with lock reason: ${e}`)
+              core.warning(`Action failed. Could not lock issue with lock reason: ${e}`)
             }
+
+  handle-question:
+    runs-on: ubuntu-latest
+    if: github.event.action == 'labeled' || github.event.action == 'unlabeled'
+    needs:
+      - issue
+    steps:
+      - uses: dessant/support-requests@v2
+        with:
+          support-label: 'support'
+          issue-comment: |
+            :wave: @{issue-author}, we use the issue tracker exclusively
+            for bug reports and feature requests. However, this issue appears
+            to be a question or support request. Please use our github discussion or
+            appropriate support channels to get help with the project. Thanks!
+          close-issue: true
