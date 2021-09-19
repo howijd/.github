@@ -16,5 +16,5 @@ runs:
   steps:
     - run: python3 -m pip install -qqq githubgql pyyaml
       shell: bash
-    - run: $GITHUB_ACTION_PATH/manage-labels.py "$GITHUB_WORKSPACE/labels.yml" {{ inputs.token }}
+    - run: python3 $GITHUB_ACTION_PATH/manage-labels.py "$GITHUB_WORKSPACE/labels.yml" ${{ inputs.token }}
       shell: bash
