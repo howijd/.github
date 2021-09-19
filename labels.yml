@@ -6,6 +6,9 @@ groups:
     bug:
       description: Something isn't working
       color: d73a4a
+    community:
+      description: It is related to community resource
+      color: f9d0c4
     documentation:
       description: Improvements or additions to documentation
       color: 0075ca
@@ -33,6 +36,9 @@ groups:
     invalid:
       description: This doesn't seem right
       color: 2A1B12
+    marketing:
+      description: Marketing materials and resources.
+      color: B39D7F
     research:
       description: 'Needs or is subject of research'
       color: BFDADC
@@ -54,6 +60,8 @@ groups:
       color: 55889F
 
 repositories:
+  .github:
+    - howijd
   howijd.network:
     - howijd
   howijd.org:
