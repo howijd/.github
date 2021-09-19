@@ -34,8 +34,8 @@ groups:
       description: This doesn't seem right
       color: 2A1B12
     research:
-      description: ''
-      color: ed8661
+      description: 'Needs or is subject of research'
+      color: BFDADC
     security:
       description: Issues that have security implications
       color: ff0000
