@@ -249,7 +249,11 @@ jobs:
         run: echo "::set-output name=remove_labels::attention"
 
       - name: belongs to feature
-        if: github.event.action == 'opened'
+        if: |
+          github.event.action == 'opened' &&
+          (!fromJSON(needs.issue.outputs.issue-is-era) ||
+            !fromJSON(needs.issue.outputs.issue-is-mile)  ||
+            !fromJSON(needs.issue.outputs.issue-is-story))
         id: belongs-to-feature
         uses: actions/github-script@v4
         with:
@@ -271,7 +275,7 @@ jobs:
               .filter((label) => label.name.toLowerCase() === 'feature').length > 0)
 
             if (belongs.length > 0) {
-              core.setOutput('add_labels', 'task')
+              core.setOutput('add_labels', 'hn/task')
             }
 
   #############################################################################

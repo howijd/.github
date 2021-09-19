@@ -1,33 +1,33 @@
-name: maintainers - (hnera) template
-description: (Maintainers Only!) Form to draft new howijd.network era.
-title: "e.g. Okram era"
+name: maintainers - (hmile) template
+description: (Maintainers Only!) Form to draft new howijd.network milestone.
+title: "e.g. v0.1.0 - title"
 labels:
-  - hn/era
+  - hn/mile
   - draft
-
 assignees:
   - howijd/maintainers
+
 body:
   - type: markdown
     attributes:
       value: |
         NOTE! This is form for maintainers and will be automatically closed if opened by user not belonging to **@howijd/maintainers** team.
 
-  - id: slogan
-    type: input
-    attributes:
-      label: Slogan or tagline
-      description: short description or slogan for this era.
-      placeholder: '# ...'
-    validations:
-      required: true
-
   - id: semver
     type: input
     attributes:
       label: Version
-      description: Semantic version for this era.
+      description: Semantic version of this milestone.
       placeholder: '1.0.0'
+    validations:
+      required: true
+
+  - id: objective
+    type: input
+    attributes:
+      label: Objective
+      description: Milestone primary objective.
+      placeholder: '# ...'
     validations:
       required: true
 
@@ -35,7 +35,7 @@ body:
     type: input
     attributes:
       label: 'Start:'
-      description: Start date or when era API definitions and features will be soft locked.
+      description: Start date or when milestone API definitions and features will be soft locked.
       placeholder: 'dd.mm.yyyy || TBD'
     validations:
       required: true
@@ -50,19 +50,11 @@ body:
       required: true
 
   - type: input
-    id: era-discussion-link
+    id: mile-discussion-link
     attributes:
       label: 'Discussions:'
-      description: Community discussions around this era.
-      placeholder: 'link to discussion category'
-    validations:
-      required: true
-
-  - type: input
-    id: prevous-era-link
-    attributes:
-      label: 'Previous era:'
-      placeholder: 'howijd.network/roadmap/era/...'
+      description: Community discussions around this milestone.
+      placeholder: 'link to discussion'
     validations:
       required: true
 
@@ -70,15 +62,26 @@ body:
     id: abstract
     attributes:
       label: The Abstract
-      placeholder: Abstracts are important because they give a first impression of the era!
+      placeholder: Abstracts are important because they give a first impression of the milestone!
+
     validations:
       required: true
 
   - type: textarea
-    id: hnmiles
+    id: stories
     attributes:
-      label: Milestones
-      description: List of related milestones under this era.
+      label: Stories
+      description: List of related strories under this milestone.
+      value: |
+        - [ ] ... # e.g howiijd/howiijd.org#x
+    validations:
+      required: true
+
+  - type: textarea
+    id: hntasks
+    attributes:
+      label: Tasks
+      description: List of tasks.
       value: |
         - [ ] ... # e.g howiijd/howiijd.org#x
     validations:
