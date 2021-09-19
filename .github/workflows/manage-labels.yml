@@ -10,12 +10,10 @@ on:
 
 
 jobs:
-  # https://github.com/marketplace/actions/manage-your-labels
   manage-your-labels:
     runs-on: ubuntu-latest
     if: github.event_name == 'push' && github.repository == 'howijd/.github'
-    env:
-      BOT_TOKEN: ${{ secrets.HOWIBOT_GITHUB_TOKEN }}
     steps:
-      - name: manage-your-labels
-        uses: actions-automation/manage-your-labels@main
+      - uses: .github/actions/label-manager
+        with:
+          token: ${{ secrets.HOWIBOT_GITHUB_TOKEN }}

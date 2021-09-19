@@ -1,0 +1,20 @@
+
+name: manage-your-labels
+description: Label management across organization or user repositories
+
+branding:
+  icon: zap
+  color: gray-dark
+
+inputs:
+  token:
+    description: 'tooooooooken'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - run: python3 -m pip install -qqq githubgql pyyaml
+      shell: bash
+    - run: $GITHUB_ACTION_PATH/manage-labels.py "$GITHUB_WORKSPACE/labels.yml" {{ inputs.token }}
+      shell: bash
