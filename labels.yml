@@ -58,6 +58,9 @@ groups:
     hn/mile:
       description: howijd.network milestone
       color: 99A663
+    hn/story:
+      description: howijd.network story
+      color: 99A660
     hn/task:
       description: howijd.network task
       color: 55889F

@@ -1,8 +1,8 @@
-name: maintainers - (story) template
-description: (Maintainers Only!) Form to draft new howijd.network story.
-title: "e.g. Implement feature x"
+name: maintainers - (task) template
+description: (Maintainers Only!) Form to draft new howijd.network task.
+title: "e.g. Fix bug, enhance, implement feature x"
 labels:
-  - hn/story
+  - hn/task
   - draft
 assignees:
   - howijd/maintainers
@@ -17,8 +17,8 @@ body:
     type: input
     attributes:
       label: Acceptance
-      description: Story primary objective or acceptance criteria.
-      placeholder: '# ...'
+      description: Task primary objective or acceptance criteria.
+      placeholder: '...'
     validations:
       required: true
 
