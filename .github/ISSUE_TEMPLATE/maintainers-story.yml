@@ -51,3 +51,7 @@ body:
         | ... | ... |
     validations:
       required: false
+
+  - type: markdown
+    attributes:
+      value: list this story also under correct milestone

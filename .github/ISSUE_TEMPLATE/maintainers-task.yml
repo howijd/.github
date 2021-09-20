@@ -51,3 +51,7 @@ body:
         | ... | ... |
     validations:
       required: false
+
+  - type: markdown
+    attributes:
+      value: list this task also under correct milestone or story
