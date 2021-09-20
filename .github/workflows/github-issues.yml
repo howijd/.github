@@ -39,11 +39,18 @@ on:
     - name: 'daily'
       cron: '0 0 * * *' # e.g. 5min */5 * * * *
     - name: 'weekly'
-      cron: '59 23 * * 0'
+      cron: '0 09 * * FRI'
     - name: 'hacktoberfest-running'
       cron: '0 0 * 10 *'
     - name: 'hacktoberfest-over'
       cron: '0 0 1 11 *'
+
+  workflow_dispatch:
+    inputs:
+      weeksly-summary:
+        description: 'Create weekly summary issue yes/no'
+        default: 'no'
+        required: true
 
 jobs:
   #############################################################################
@@ -109,6 +116,7 @@ jobs:
             })
             core.info(`user: ${user} has total ${res.repository.issues.totalCount} issues`)
             core.setOutput('totalCount', res.repository.issues.totalCount)
+
       - name: set from github api
         id: set-from-github-api
         uses: actions/github-script@v4
@@ -142,11 +150,18 @@ jobs:
   # weekly schedule
   weekly:
     needs: schedule
-    if: github.event.schedule == '59 23 * * 0'
+    if: github.event.schedule == '0 09 * * FRI'
     runs-on: ubuntu-latest
     steps:
       - if: ${{ contains(toJSON(github.event), 'weekly') }}
         run: exit 1
+
+    # weekly schedule
+  manual:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - run: exit 0
 
   #############################################################################
   # Workflow action triggers
@@ -454,3 +469,179 @@ jobs:
             to be a question or support request. Please use our github discussion or
             appropriate support channels to get help with the project. Thanks!
           close-issue: true
+
+  create-week-summary-issue-for-repo:
+    runs-on: ubuntu-latest
+    needs:
+      - manual
+    if: github.event.inputs.weeksly-summary == 'yes'
+    steps:
+      - uses: actions/checkout@v2
+      - name: set from github graphql
+        id: set-from-github-graphql
+        uses: actions/github-script@v4
+        with:
+          script: |
+            const repo = context.payload.repository.name
+            const owner = context.payload.repository.owner.login
+            // TOTAL ISSUES
+            const query = `query ($since: DateTime, $owner: String!, $repo: String!) {
+              repository(owner: $owner, name: $repo) {
+                issues(states: [CLOSED], filterBy: {since: $since}, first: 100) {
+                  totalCount
+                  nodes {
+                    url
+                  }
+                }
+                pullRequests(states: [MERGED], orderBy: {field: UPDATED_AT, direction: DESC}, first: 100) {
+                  totalCount
+                  nodes {
+                    url
+                    mergedAt
+                  }
+                }
+              }
+            }`
+
+            const getmonday = () => {
+              const now = new Date()
+              const mon = new Date(now.toUTCString().slice(0, -4))
+              if (mon.getDay() === 1) {
+                mon.setDate(mon.getDate() - 1)
+              }
+              mon.setDate(mon.getDate() - (mon.getDay() + 6) % 7)
+              mon.setHours(0, 0, 0, 0)
+              return mon.toISOString()
+            }
+            const monday = getmonday()
+
+            const res = await github.graphql(query, {
+              since: monday,
+              repo: repo,
+              owner: owner,
+            })
+
+            let payload = `### ${repo}\n\n`
+            payload += '#### ISSUES\n\n'
+
+            for (let i in res.repository.issues.nodes) {
+              payload += `- [x] ${res.repository.issues.nodes[i].url}\n`
+            }
+
+            payload += '\n#### PULL REQUESTS\n\n'
+
+            for (let i in res.repository.pullRequests.nodes) {
+              if (new Date(res.repository.pullRequests.nodes[i].mergedAt) < monday) continue
+              payload += `- [x] ${res.repository.pullRequests.nodes[i].url}\n`
+            }
+
+            core.setOutput('body', payload)
+
+      - name: create issue
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          title="WEEK SUMMARY $(date +"%W-%Y")"
+          gh issue create \
+            --title "$title" \
+            --body "${{ steps.set-from-github-graphql.outputs.body }}" \
+            --label "draft,triage"
+
+  collect-week-summary:
+    runs-on: ubuntu-latest
+    needs:
+      - weekly
+    if: github.repository == 'howijd/howijd.network'
+    outputs:
+      issue_body: ${{ steps.set-from-github-graphql.outputs.body }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: set from github graphql
+        id: set-from-github-graphql
+        uses: actions/github-script@v4
+        with:
+          script: |
+            const repos = [
+              '.github',
+              'howi',
+              'howijd.network',
+              'howijd.org',
+              'howijd.com',
+            ]
+
+            const getmonday = () => {
+              const now = new Date()
+              const mon = new Date(now.toUTCString().slice(0, -4))
+              if (mon.getDay() === 1) {
+                mon.setDate(mon.getDate() - 1)
+              }
+              mon.setDate(mon.getDate() - (mon.getDay() + 6) % 7)
+              mon.setHours(0, 0, 0, 0)
+              return mon.toISOString()
+            }
+            const monday = getmonday()
+
+            // TOTAL ISSUES
+            const getData = async (repo) => {
+              const owner = 'howijd'
+
+              const query = `query ($since: DateTime, $owner: String!, $repo: String!) {
+                repository(owner: $owner, name: $repo) {
+                  issues(states: [CLOSED], filterBy: {since: $since}, first: 100) {
+                    totalCount
+                    nodes {
+                      url
+                    }
+                  }
+                  pullRequests(states: [MERGED], orderBy: {field: UPDATED_AT, direction: DESC}, first: 100) {
+                    totalCount
+                    nodes {
+                      url
+                      mergedAt
+                    }
+                  }
+                }
+              }`
+
+              const res = await github.graphql(query, {
+                since: monday,
+                repo: repo,
+                owner: owner,
+              })
+
+              let payload = `### ${repo}\n\n`
+              payload += '#### ISSUES\n\n'
+
+              for (let i in res.repository.issues.nodes) {
+                payload += `- [x] ${res.repository.issues.nodes[i].url}\n`
+              }
+              payload += '\n#### PULL REQUESTS\n\n'
+
+              for (let i in res.repository.pullRequests.nodes) {
+                if (new Date(res.repository.pullRequests.nodes[i].mergedAt) < monday) continue
+                payload += `- [x] ${res.repository.pullRequests.nodes[i].url}\n`
+              }
+              return payload
+            }
+
+            let body = '# PROJECTS\n\n'
+            for (let i in repos) {
+              body += await getData(repos[i])
+            }
+
+            core.setOutput('body', body)
+
+  create-week-summary-issue:
+    runs-on: ubuntu-latest
+    needs: collect-week-summary
+    steps:
+      - uses: actions/checkout@v2
+      - name: create issue
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          title="WEEK SUMMARY $(date +"%W-%Y")"
+          gh issue create \
+            --title "$title" \
+            --body "${{ needs.collect-week-summary.outputs.issue_body }}" \
+            --label "draft,triage"
