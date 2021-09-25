@@ -169,9 +169,9 @@ jobs:
       - issue-comment
     runs-on: ubuntu-latest
     if: |
-      !failure() && !cancelled() &&
-      (github.event_name == 'issue_comment' && github.event.action == 'created') ||
-      (github.event_name == 'issues' && github.event.action == 'opened')
+      always() &&
+      ((github.event_name == 'issue_comment' && github.event.action == 'created') ||
+      (github.event_name == 'issues' && github.event.action == 'opened'))
     outputs:
       to-discord: steps.discord.outputs.enabled
       payload: steps.payload.outputs.result
@@ -678,6 +678,10 @@ jobs:
     steps:
       - run: echo "${{ toJSON(github.event.issue) }}"
       - run: echo "${{ toJSON(needs) }}"
-      - env:
-          DISCORD_WEBHOOK_ID: ${{ secrets.DISCORD_WEBHOOK_ID }}
-        run: exit 0
+      # - uses: appleboy/discord-action@master
+      #   with:
+      #     webhook_id: ${{ secrets.DISCORD_WEBHOOK_ID }}
+      #     webhook_token: ${{ secrets.DISCORD_WEBHOOK_TOKEN }}
+      #     username: "GitHub Bot"
+      #     message: 'test message'
+      #     color: '#E88430'
