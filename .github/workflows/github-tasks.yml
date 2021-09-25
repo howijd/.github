@@ -301,7 +301,7 @@ jobs:
                 }
                 break
             }
-            payload.message = (body && body.length > 255) ? body.substring(0, 253) : body
+            payload.message = (body && body.length > 255) ? body.substring(0, 253) : (body ?? '')
 
             return payload
 

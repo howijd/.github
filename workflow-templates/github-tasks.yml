@@ -128,6 +128,23 @@ jobs:
             core.info(zen)
             core.setOutput('zen', zen)
 
+  pull-request:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    outputs:
+      zen: ${{ steps.set-from-github-api.outputs.zen }}
+    steps:
+      - name: set from github api
+        id: set-from-github-api
+        uses: actions/github-script@v5
+        with:
+          script: |
+            // RANDOM SENTENCE
+            // const zen = await github.rest.meta.getZen()
+            const { data: zen } = await github.request('GET /zen')
+            core.info(zen)
+            core.setOutput('zen', zen)
+
   issue-comment:
     name: Issue comment
     runs-on: ubuntu-latest
@@ -190,14 +207,16 @@ jobs:
       - issue-comment
       - discussion
       - discussion-comment
+      - pull-request
     runs-on: ubuntu-latest
     if: |
-      !failure() && !cancelled() && (success('issue-comment') || success('issue') || success('discussion') || success('discussion-comment')) &&
+      !failure() && !cancelled() && (success('issue-comment') || success('issue') || success('discussion') || success('discussion-comment') || success('pull-request')) &&
       (
         (github.event_name == 'issue_comment' && github.event.action == 'created') ||
         (github.event_name == 'issues' && github.event.action == 'opened') ||
         (github.event_name == 'discussion' && github.event.action == 'created') ||
-        (github.event_name == 'discussion_comment' && github.event.action == 'created')
+        (github.event_name == 'discussion_comment' && github.event.action == 'created') ||
+        (github.event_name == 'pull_request' && github.event.action == 'opened')
       )
     outputs:
       discord-enabled: ${{ steps.discord.outputs.enabled }}
@@ -231,6 +250,18 @@ jobs:
                 body = context.payload.issue.body
                 if (context.payload.issue.labels.length > 0) {
                   payload.color = `#${context.payload.issue.labels[0].color}`
+                }
+                break
+              case 'pull_request':
+                payload.link = context.payload.pull_request.html_url
+                payload.icon = context.payload.organization.avatar_url
+                payload.title = `#${context.payload.pull_request.number} ${context.payload.pull_request.title}`
+                payload.author_name = context.payload.sender.login
+                payload.author_avatar_url = context.payload.sender.avatar_url
+                payload.author_link = context.payload.sender.html_url
+                body = context.payload.pull_request.body
+                if (context.payload.pull_request.labels.length > 0) {
+                  payload.color = `#${context.payload.pull_request.labels[0].color}`
                 }
                 break
               case 'issue_comment':
@@ -270,7 +301,7 @@ jobs:
                 }
                 break
             }
-            payload.message = (body && body.length > 255) ? body.substring(0, 253) : body
+            payload.message = (body && body.length > 255) ? body.substring(0, 253) : (body ?? '')
 
             return payload
 
