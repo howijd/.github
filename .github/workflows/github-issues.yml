@@ -707,6 +707,9 @@ jobs:
     steps:
       - run: echo "${{ toJSON(needs) }}"
         continue-on-error: true
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16'
       - run: npm install discord.js
       - uses: actions/github-script@v5
         env:
