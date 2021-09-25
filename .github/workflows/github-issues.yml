@@ -735,8 +735,8 @@ jobs:
               .setFooter('via GitHub', 'https://github.githubassets.com/favicons/favicon.png')
               .setURL(payload.link)
             webhook.send({
-              username: context.payload.repository.full_name,
-              avatarURL: context.payload.organization.avatar_url,
+              username: '${{ context.payload.repository.full_name }}',
+              avatarURL: '${{ context.payload.organization.avatar_url }}',
               embeds: [embed],
             })
           EOF
