@@ -9,6 +9,9 @@ groups:
     community:
       description: It is related to community resource
       color: f9d0c4
+    dependency:
+      description: Project dependency
+      color: B47E27
     documentation:
       description: Improvements or additions to documentation
       color: 0075ca
