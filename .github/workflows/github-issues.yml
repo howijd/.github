@@ -702,7 +702,7 @@ jobs:
           webhook_token: ${{ secrets.DISCORD_WEBHOOK_TOKEN }}
           username: "New issue on GitHub"
           avatar_url: "${{ fromJSON(needs.socials.outputs.payload).avatar }}"
-          message: "${{ fromJSON(needs.socials.outputs.payload).message) }}"
+          message: "${{ fromJSON(needs.socials.outputs.payload).message }}"
           color: "${{ fromJSON(needs.socials.outputs.payload).color }}"
           wait: true
 
