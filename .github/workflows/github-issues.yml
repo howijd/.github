@@ -166,7 +166,7 @@ jobs:
   share:
     needs:
       - issue
-      - issue_comment
+      - issue-comment
     runs-on: ubuntu-latest
     if: |
       !failure() && !cancelled() &&
