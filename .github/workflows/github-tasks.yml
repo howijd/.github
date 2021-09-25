@@ -241,7 +241,7 @@ jobs:
                 payload.author_name = context.payload.sender.login
                 payload.author_avatar_url = context.payload.sender.avatar_url
                 payload.author_link = context.payload.sender.html_url
-                if (context.payload.discussion.labels.length > 0) {
+                if (context.payload.discussion.labels && context.payload.discussion.labels.length > 0) {
                   payload.color = `#${context.payload.discussion.labels[0].color}`
                 }
                 break
