@@ -56,7 +56,7 @@ jobs:
   event:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "toJSON(github)"
+      - run: echo "${{ toJSON(github) }}"
   #############################################################################
   # Workflow pipline triggers
   # add pipline entrypoint based on event or multiple conditions
@@ -696,6 +696,7 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ !failure() && !cancelled() }}
     steps:
+      - run: echo "${{ needs.socials.outputs.payload }}"
       - uses: appleboy/discord-action@master
         with:
           webhook_id: ${{ secrets.DISCORD_WEBHOOK_ID }}
@@ -706,5 +707,5 @@ jobs:
           color: ${{ fromJSON(needs.socials.outputs.payload).color }}
           wait: true
       - run: echo "${{ toJSON(github.event.issue) }}"
-      - run: echo "${{ toJSON(needs.socials.outputs) }}"
+
 
