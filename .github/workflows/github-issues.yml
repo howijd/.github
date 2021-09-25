@@ -163,6 +163,14 @@ jobs:
     steps:
       - run: exit 0
 
+  share:
+    needs: issue
+    runs-on: ubuntu-latest
+    outputs:
+      discord: ${{ contains(secrets.*, 'DISCORD_WEBHOOK_ID') }}
+    steps:
+      - run: exit 0
+
   #############################################################################
   # Workflow action triggers
   # These jobs set outputs for (Workflow actors) use to trigger actual actions
@@ -645,3 +653,12 @@ jobs:
             --title "$title" \
             --body "${{ needs.collect-week-summary.outputs.issue_body }}" \
             --label "draft,triage"
+
+  # SHARE
+  discord:
+    needs: share
+    runs-on: ubuntu-latest
+    if:
+    steps:
+      - run: echo "${{ toJSON(github.event.issue) }}"
+      - run: echo "${{ toJSON(needs) }}"
