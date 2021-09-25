@@ -207,6 +207,7 @@ jobs:
             }
             return payload
       - run: echo "${{ toJSON(fromJSON(steps.payload.outputs.result)) }}"
+        continue-on-error: true
 
   #############################################################################
   # Workflow action triggers
