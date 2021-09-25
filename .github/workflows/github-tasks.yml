@@ -180,12 +180,14 @@ jobs:
     needs:
       - issue
       - issue-comment
+      - discussion
     runs-on: ubuntu-latest
     if: |
       !failure() && !cancelled() && (success('issue-comment') || success('issue')) &&
       (
         (github.event_name == 'issue_comment' && github.event.action == 'created') ||
-        (github.event_name == 'issues' && github.event.action == 'opened')
+        (github.event_name == 'issues' && github.event.action == 'opened') ||
+        (github.event_name == 'discussion' && github.event.action == 'created')
       )
     outputs:
       discord-enabled: ${{ steps.discord.outputs.enabled }}
@@ -226,10 +228,21 @@ jobs:
                 payload.author_name = context.payload.sender.login
                 payload.author_avatar_url = context.payload.sender.avatar_url
                 payload.author_link = context.payload.sender.html_url
-
                 payload.message = `${ context.payload.issue.body }...`.substring(0, 253)
                 if (context.payload.issue.labels.length > 0) {
                   payload.color = `#${context.payload.issue.labels[0].color}`
+                }
+                break
+              case 'discussion':
+                payload.link = context.payload.discussion.html_url
+                payload.icon = context.payload.organization.avatar_url
+                payload.title = `#${context.payload.discussion.number} ${context.payload.discussion.title}`
+                payload.message = `${ context.payload.discussion.body }...`.substring(0, 253)
+                payload.author_name = context.payload.sender.login
+                payload.author_avatar_url = context.payload.sender.avatar_url
+                payload.author_link = context.payload.sender.html_url
+                if (context.payload.discussion.labels.length > 0) {
+                  payload.color = `#${context.payload.discussion.labels[0].color}`
                 }
                 break
             }
