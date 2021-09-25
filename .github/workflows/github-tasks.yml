@@ -183,7 +183,7 @@ jobs:
       - discussion
     runs-on: ubuntu-latest
     if: |
-      !failure() && !cancelled() && (success('issue-comment') || success('issue')) &&
+      !failure() && !cancelled() && (success('issue-comment') || success('issue') || success('discussion')) &&
       (
         (github.event_name == 'issue_comment' && github.event.action == 'created') ||
         (github.event_name == 'issues' && github.event.action == 'opened') ||
