@@ -696,15 +696,15 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ !failure() && !cancelled() }}
     steps:
-      - run: echo "${{ toJSON(needs.socials.outputs) }}"
       - uses: appleboy/discord-action@master
         with:
           webhook_id: ${{ secrets.DISCORD_WEBHOOK_ID }}
           webhook_token: ${{ secrets.DISCORD_WEBHOOK_TOKEN }}
-          username: "@${{ needs.socials.outputs.payload.user }} via GitHub"
-          avatar_url: "${{ needs.socials.outputs.payload.avatar }}"
-          message: '${{ needs.socials.outputs.payload.title }}\n\n${{ needs.socials.outputs.payload.message }}'
-          color: '${{ needs.socials.outputs.payload.color }}'
+          username: "@${{ fromJSON(needs.socials.outputs.payload).user }} via GitHub"
+          avatar_url: "${{ fromJSON(needs.socials.outputs.payload).avatar }}"
+          message: '${{ fromJSON(needs.socials.outputs.payload).title }}\n\n${{ fromJSON(needs.socials.outputs.payload).message }}'
+          color: '${{ fromJSON(needs.socials.outputs.payload).color }}'
           wait: true
       - run: echo "${{ toJSON(github.event.issue) }}"
+      - run: echo "${{ toJSON(needs.socials.outputs) }}"
 
