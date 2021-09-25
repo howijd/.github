@@ -805,8 +805,8 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ !failure() && !cancelled() && needs.socials.outputs.telegram-enabled == 'true'  }}
     steps:
-      uses: appleboy/telegram-action@master
-      with:
-        to: '-1001195004886'
-        token: ${{ secrets.TELEGRAM_TOKEN }}
-        args: The ${{ github.event_name }} event triggered first step.
+      - uses: appleboy/telegram-action@master
+        with:
+          to: '-1001195004886'
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          args: The ${{ github.event_name }} event triggered first step.
