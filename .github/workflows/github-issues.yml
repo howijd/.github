@@ -172,10 +172,10 @@ jobs:
       - issue
       - issue-comment
     runs-on: ubuntu-latest
-    if: |
-      !failure() && !cancelled() &&
-      ((github.event_name == 'issue_comment' && github.event.action == 'created') ||
-      (github.event_name == 'issues' && github.event.action == 'opened'))
+    # if: |
+    #   !failure() && !cancelled() &&
+    #   ((github.event_name == 'issue_comment' && github.event.action == 'created') ||
+    #   (github.event_name == 'issues' && github.event.action == 'opened'))
     outputs:
       to-discord: steps.discord.outputs.enabled
       payload: steps.payload.outputs.result
