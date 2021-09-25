@@ -35,6 +35,10 @@ on:
       # - deleted
       # - edited
 
+  discussion:
+    types:
+      - created
+
   schedule:
     - name: 'daily'
       cron: '0 0 * * *' # e.g. 5min */5 * * * *
@@ -61,15 +65,6 @@ jobs:
   # Workflow pipline triggers
   # add pipline entrypoint based on event or multiple conditions
   #############################################################################
-  issue-comment:
-    name: Issue comment
-    runs-on: ubuntu-latest
-    if: github.event_name == 'issue_comment' && !github.event.issue.pull_request
-    steps:
-      - if: github.event.action == 'created'
-        run: |
-          echo "${{ github.event.sender.login }} commented on issue #${{ github.event.issue.number }}"
-
   # Issues
   issue:
     runs-on: ubuntu-latest
@@ -82,13 +77,6 @@ jobs:
       issue-is-story: ${{ toJSON(contains(github.event.issue.labels.*.name, 'hn/story')) }}
       issue-is-task: ${{ toJSON(contains(github.event.issue.labels.*.name, 'hn/task')) }}
     steps:
-      # no pull request should trugger this job
-      - name: is pull request
-        if: github.event.issue.pull_request
-        run: |
-          echo "issue #${{ github.event.issue.number }} pull_request #${{ github.event.issue.pull_request }}"
-          exit 1
-
       # just print issue payload
       - name: issue info
         env:
@@ -132,6 +120,27 @@ jobs:
             core.info(zen)
             core.setOutput('zen', zen)
 
+  issue-comment:
+    name: Issue comment
+    runs-on: ubuntu-latest
+    if: github.event_name == 'issue_comment' && !github.event.issue.pull_request
+    steps:
+      - if: github.event.action == 'created'
+        run: |
+          echo "${{ github.event.sender.login }} commented on issue #${{ github.event.issue.number }}"
+
+  discussion:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'discussion'
+    steps:
+      - run: echo "${{ toJSON(github.event) }}"
+
+  discussion-comment:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'discussion_comment'
+    steps:
+      - run: echo "${{ toJSON(github.event) }}"
+
   # Schedule
   schedule:
     if: github.event_name == 'schedule'
@@ -174,8 +183,10 @@ jobs:
     runs-on: ubuntu-latest
     if: |
       !failure() && !cancelled() && (success('issue-comment') || success('issue')) &&
-      ((github.event_name == 'issue_comment' && github.event.action == 'created') ||
-      (github.event_name == 'issues' && github.event.action == 'opened'))
+      (
+        (github.event_name == 'issue_comment' && github.event.action == 'created') ||
+        (github.event_name == 'issues' && github.event.action == 'opened')
+      )
     outputs:
       discord-enabled: ${{ steps.discord.outputs.enabled }}
       payload: ${{ steps.payload.outputs.result }}
@@ -207,6 +218,7 @@ jobs:
                 if (context.payload.issue.labels.length > 0) {
                   payload.color = `#${context.payload.issue.labels[0].color}`
                 }
+                break
               case 'issues':
                 payload.link = context.payload.issue.html_url
                 payload.icon = context.payload.organization.avatar_url
