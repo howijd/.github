@@ -199,7 +199,7 @@ jobs:
               case 'issues':
                 payload.link = context.payload.issue.html_url
                 payload.icon = context.payload.organization.avatar_url
-                payload.title = context.payload.issue.title
+                payload.title = `#${context.payload.issue.number} ${context.payload.issue.title}`
                 payload.author_name = context.payload.sender.login
                 payload.author_avatar_url = context.payload.sender.avatar_url
                 payload.author_link = context.payload.sender.html_url
