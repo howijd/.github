@@ -707,7 +707,7 @@ jobs:
     steps:
       - run: echo "${{ toJSON(needs.outputs) }}"
         continue-on-error: true
-      - run: npm install execa
+      - run: npm install discord.js
       - uses: actions/github-script@v5
         env:
           webhook_id: ${{ secrets.DISCORD_WEBHOOK_ID }}
