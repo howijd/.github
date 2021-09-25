@@ -173,7 +173,7 @@ jobs:
       - issue-comment
     runs-on: ubuntu-latest
     if: |
-      !always() && !cancelled() &&
+      !failure() && !cancelled() &&
       ((github.event_name == 'issue_comment' && github.event.action == 'created') ||
       (github.event_name == 'issues' && github.event.action == 'opened'))
     outputs:
