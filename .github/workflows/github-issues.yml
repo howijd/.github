@@ -181,8 +181,8 @@ jobs:
         with:
           script: |
             const payload = {
-              github.context.eventName,
-              github.context.actor,
+              eventName: github.context.eventName,
+              actor: github.context.actor,
             }
             return payload
 
@@ -299,7 +299,7 @@ jobs:
         uses: actions/github-script@v5
         with:
           script: |
-            const events = await github.issues.listEventsForTimeline({
+            const events = await github.rest.issues.listEventsForTimeline({
               owner: context.payload.repository.owner.login,
               repo: context.payload.repository.name,
               issue_number: context.issue.number,
@@ -395,7 +395,7 @@ jobs:
         uses: actions/github-script@v5
         with:
           script: |
-            github.reactions.createForIssue({
+            github.rest.reactions.createForIssue({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -471,11 +471,11 @@ jobs:
         with:
           script: |
             try {
-              await client.issues.lock({
-              owner: github.context.repo.owner,
-              repo: github.context.repo.repo,
-              issue_number: context.issue.number,
-            })
+              await github.rest.issues.lock({
+                owner: github.context.repo.owner,
+                repo: github.context.repo.repo,
+                issue_number: context.issue.number,
+              })
             } catch (e) {
               core.warning(`Action failed. Could not lock issue with lock reason: ${e}`)
             }
