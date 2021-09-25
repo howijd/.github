@@ -212,7 +212,7 @@ jobs:
             }
             return payload
       - id: discord
-        run: echo "::set-output name=enabled::${{ contains(secrets, 'DISCORD_WEBHOOK_ID') }}"
+        run: echo "::set-output name=enabled::${{ contains(secrets.*, 'DISCORD_WEBHOOK_ID') }}"
       - run: echo "${{ toJSON(fromJSON(steps.payload.outputs.result)) }}"
         continue-on-error: true
 
