@@ -672,16 +672,16 @@ jobs:
             --label "draft,triage"
 
   # SHARE
-  discord:
+  post-to-discord:
     needs: share
     runs-on: ubuntu-latest
     steps:
       - run: echo "${{ toJSON(github.event.issue) }}"
       - run: echo "${{ toJSON(needs) }}"
-      # - uses: appleboy/discord-action@master
-      #   with:
-      #     webhook_id: ${{ secrets.DISCORD_WEBHOOK_ID }}
-      #     webhook_token: ${{ secrets.DISCORD_WEBHOOK_TOKEN }}
-      #     username: "GitHub Bot"
-      #     message: 'test message'
-      #     color: '#E88430'
+      - uses: appleboy/discord-action@master
+        with:
+          webhook_id: ${{ secrets.DISCORD_WEBHOOK_ID }}
+          webhook_token: ${{ secrets.DISCORD_WEBHOOK_TOKEN }}
+          username: "GitHub Bot"
+          message: 'test message'
+          color: '#E88430'
