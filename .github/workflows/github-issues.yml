@@ -170,7 +170,7 @@ jobs:
   socials:
     needs:
       - issue
-      - issue-comment
+      # - issue-comment
     runs-on: ubuntu-latest
     # if: |
     #   !failure() && !cancelled() &&
