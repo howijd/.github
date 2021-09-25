@@ -717,7 +717,7 @@ jobs:
           payload_str: ${needs.socials.outputs.payload}
         run: |
           cat >> script.mjs << EOF
-            const { MessageEmbed, WebhookClient } = import 'discord.js'
+            const { MessageEmbed, WebhookClient } import 'discord.js'
             const { webhook_id, webhook_token, payload_str } = process.env
             const payload = JSON.parse(payload_str)
 
