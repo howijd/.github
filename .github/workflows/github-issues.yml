@@ -740,4 +740,4 @@ jobs:
               embeds: [embed],
             })
           EOF
-          node ./script.js
+          node ./script.mjs
