@@ -714,7 +714,7 @@ jobs:
       - env:
           webhook_id: ${{ secrets.DISCORD_WEBHOOK_ID }}
           webhook_token: ${{ secrets.DISCORD_WEBHOOK_TOKEN }}
-          payload_str: ${needs.socials.outputs.payload}
+          payload_str: ${{ needs.socials.outputs.payload }}
         run: |
           cat >> script.mjs << EOF
             import { MessageEmbed, WebhookClient } from 'discord.js'
