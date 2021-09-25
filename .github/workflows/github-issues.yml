@@ -703,7 +703,7 @@ jobs:
   discord:
     needs: socials
     runs-on: ubuntu-latest
-    if: ${{ !failure() && !cancelled() }}
+    if: ${{ !failure() && !cancelled() && needs.socials.outputs.discord-enabled == 'true'  }}
     steps:
       - run: echo "${{ toJSON(needs) }}"
         continue-on-error: true
