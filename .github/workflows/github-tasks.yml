@@ -815,3 +815,5 @@ jobs:
             [${{ fromJSON(needs.socials.outputs.payload).title }}](${{ fromJSON(needs.socials.outputs.payload).link }})
 
             ${{ fromJSON(needs.socials.outputs.payload).message }}"
+
+            by [@${{ fromJSON(needs.socials.outputs.payload).author_name }}](${{ fromJSON(needs.socials.outputs.payload).author_link }})
