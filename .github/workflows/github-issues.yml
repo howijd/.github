@@ -186,7 +186,6 @@ jobs:
           script: |
             const payload = {
               eventName: context.eventName,
-              payload: context.payload,
               user: context.actor,
               title: '',
               link: '',
@@ -196,10 +195,10 @@ jobs:
             }
             switch (payload.eventName) {
               case 'issues':
-                payload.title = JSON.stringify(`[@${ context.payload.sender.login }](${ context.payload.sender.html_url }) opened issue [${ context.payload.issue.title }](${ context.payload.issue.html_url })`)
+                payload.title = `[@${ context.payload.sender.login }](${ context.payload.sender.html_url }) opened issue [${ context.payload.issue.title }](${ context.payload.issue.html_url })`
                 payload.link = context.payload.issue.html_url
                 payload.avatar = context.payload.sender.avatar_url
-                payload.message = JSON.stringify(`${ context.payload.issue.body.substring(0, 253) }...`)
+                payload.message = `${ context.payload.issue.body.substring(0, 253) }...`
                 if (context.payload.issue.labels.length > 0) {
                   payload.color = `#${context.payload.issue.labels[0].color}`
                 }
@@ -698,16 +697,14 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ !failure() && !cancelled() }}
     steps:
-      - run: echo "${{ needs.socials.outputs.payload }}"
       - uses: appleboy/discord-action@master
         with:
           webhook_id: ${{ secrets.DISCORD_WEBHOOK_ID }}
           webhook_token: ${{ secrets.DISCORD_WEBHOOK_TOKEN }}
           username: "@${{ fromJSON(needs.socials.outputs.payload).user }} via GitHub"
-          avatar_url: ${{ needs.socials.outputs.payload.avatar }}
-          message: "${{ needs.socials.outputs.payload.title }}\n\n${{ needs.socials.outputs.payload.message }}"
+          avatar_url: ${{ fromJSON(needs.socials.outputs.payload).avatar }}
+          message: "${{ fromJSON(needs.socials.outputs.payload).title }}\n\n${{ fromJSON(needs.socials.outputs.payload).message }}"
           color: ${{ fromJSON(needs.socials.outputs.payload).color }}
           wait: true
-      - run: echo "${{ toJSON(github.event.issue) }}"
 
 
