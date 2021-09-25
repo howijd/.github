@@ -188,9 +188,6 @@ jobs:
 
             return payload
 
-      - id: to-discord
-        run: echo "::set-output name=enabled::${{ contains(secrets.*, 'DISCORD_WEBHOOK_ID') }}"
-
   #############################################################################
   # Workflow action triggers
   # These jobs set outputs for (Workflow actors) use to trigger actual actions
@@ -678,7 +675,9 @@ jobs:
   discord:
     needs: share
     runs-on: ubuntu-latest
-    if:
     steps:
       - run: echo "${{ toJSON(github.event.issue) }}"
       - run: echo "${{ toJSON(needs) }}"
+      - env:
+          DISCORD_WEBHOOK_ID: ${{ secrets.DISCORD_WEBHOOK_ID }}
+        run: exit 0
