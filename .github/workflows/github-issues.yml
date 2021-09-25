@@ -711,14 +711,13 @@ jobs:
         with:
           node-version: '16'
       - run: npm install discord.js
-      - uses: actions/github-script@v5
-        env:
+      - env:
           webhook_id: ${{ secrets.DISCORD_WEBHOOK_ID }}
           webhook_token: ${{ secrets.DISCORD_WEBHOOK_TOKEN }}
           payload_str: ${needs.socials.outputs.payload}
-        with:
-          script: |
-            const { MessageEmbed, WebhookClient } = require('discord.js')
+        run: |
+          cat >> script.mjs << EOF
+            const { MessageEmbed, WebhookClient } = import 'discord.js'
             const { webhook_id, webhook_token, payload_str } = process.env
             const payload = JSON.parse(payload_str)
 
@@ -740,3 +739,5 @@ jobs:
               avatarURL: context.payload.organization.avatar_url,
               embeds: [embed],
             })
+          EOF
+          node ./script.js
