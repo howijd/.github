@@ -163,13 +163,13 @@ jobs:
     steps:
       - run: exit 0
 
-  share:
+  socials:
     needs:
       - issue
       - issue-comment
     runs-on: ubuntu-latest
     if: |
-      always() &&
+      !always() && !cancelled() &&
       ((github.event_name == 'issue_comment' && github.event.action == 'created') ||
       (github.event_name == 'issues' && github.event.action == 'opened'))
     outputs:
@@ -672,8 +672,8 @@ jobs:
             --label "draft,triage"
 
   # SHARE
-  post-to-discord:
-    needs: share
+  discord:
+    needs: socials
     runs-on: ubuntu-latest
     steps:
       - run: echo "${{ toJSON(github.event.issue) }}"
