@@ -193,7 +193,7 @@ jobs:
         (github.event_name == 'issue_comment' && github.event.action == 'created') ||
         (github.event_name == 'issues' && github.event.action == 'opened') ||
         (github.event_name == 'discussion' && github.event.action == 'created') ||
-        (github.event_name == 'discussion_comment' && github.event.action == 'created') ||
+        (github.event_name == 'discussion_comment' && github.event.action == 'created')
       )
     outputs:
       discord-enabled: ${{ steps.discord.outputs.enabled }}
