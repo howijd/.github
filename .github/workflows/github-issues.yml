@@ -206,6 +206,7 @@ jobs:
                 break
             }
             return payload
+        - run: echo "${{ steps.payload.outputs.result }}"
 
   #############################################################################
   # Workflow action triggers
