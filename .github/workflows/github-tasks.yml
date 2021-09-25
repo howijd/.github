@@ -39,6 +39,10 @@ on:
     types:
       - created
 
+  discussion_comment:
+    types:
+      - created
+
   schedule:
     - name: 'daily'
       cron: '0 0 * * *' # e.g. 5min */5 * * * *
