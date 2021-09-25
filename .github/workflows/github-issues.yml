@@ -705,14 +705,14 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ !failure() && !cancelled() }}
     steps:
-      - run: echo "${{ toJSON(needs.outputs) }}"
+      - run: echo "${{ toJSON(needs) }}"
         continue-on-error: true
       - run: npm install discord.js
       - uses: actions/github-script@v5
         env:
           webhook_id: ${{ secrets.DISCORD_WEBHOOK_ID }}
           webhook_token: ${{ secrets.DISCORD_WEBHOOK_TOKEN }}
-          payload: ${needs.socials.outputs.payload}
+          payload_str: ${needs.socials.outputs.payload}
         with:
           script: |
             const { MessageEmbed, WebhookClient } = require('discord.js')
