@@ -53,6 +53,10 @@ on:
         required: true
 
 jobs:
+  event:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "toJSON(github)"
   #############################################################################
   # Workflow pipline triggers
   # add pipline entrypoint based on event or multiple conditions
