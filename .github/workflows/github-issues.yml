@@ -177,8 +177,8 @@ jobs:
     #   ((github.event_name == 'issue_comment' && github.event.action == 'created') ||
     #   (github.event_name == 'issues' && github.event.action == 'opened'))
     outputs:
-      to-discord: steps.discord.outputs.enabled
-      payload: steps.payload.outputs.result
+      to-discord: ${{ steps.discord.outputs.enabled }}
+      payload: ${{ steps.payload.outputs.result }}
     steps:
       - id: payload
         uses: actions/github-script@v5
