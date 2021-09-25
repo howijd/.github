@@ -137,13 +137,13 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event_name == 'discussion'
     steps:
-      - run: echo "${{ toJSON(github.event) }}"
+      - run: exit 0
 
   discussion-comment:
     runs-on: ubuntu-latest
     if: github.event_name == 'discussion_comment'
     steps:
-      - run: echo "${{ toJSON(github.event) }}"
+      - run: exit 0
 
   # Schedule
   schedule:
@@ -185,13 +185,15 @@ jobs:
       - issue
       - issue-comment
       - discussion
+      - discussion-comment
     runs-on: ubuntu-latest
     if: |
-      !failure() && !cancelled() && (success('issue-comment') || success('issue') || success('discussion')) &&
+      !failure() && !cancelled() && (success('issue-comment') || success('issue') || success('discussion') || success('discussion-comment')) &&
       (
         (github.event_name == 'issue_comment' && github.event.action == 'created') ||
         (github.event_name == 'issues' && github.event.action == 'opened') ||
-        (github.event_name == 'discussion' && github.event.action == 'created')
+        (github.event_name == 'discussion' && github.event.action == 'created') ||
+        (github.event_name == 'discussion_comment' && github.event.action == 'created') ||
       )
     outputs:
       discord-enabled: ${{ steps.discord.outputs.enabled }}
@@ -213,18 +215,6 @@ jobs:
               color: '#E88430',
             }
             switch (payload.eventName) {
-              case 'issue_comment':
-                payload.link = context.payload.comment.html_url
-                payload.icon = context.payload.organization.avatar_url
-                payload.title = `New comment on #${context.payload.issue.number} ${context.payload.issue.title}`
-                payload.author_name = context.payload.sender.login
-                payload.author_avatar_url = context.payload.sender.avatar_url
-                payload.author_link = context.payload.sender.html_url
-                payload.message = `${ context.payload.comment.body }...`.substring(0, 253)
-                if (context.payload.issue.labels.length > 0) {
-                  payload.color = `#${context.payload.issue.labels[0].color}`
-                }
-                break
               case 'issues':
                 payload.link = context.payload.issue.html_url
                 payload.icon = context.payload.organization.avatar_url
@@ -237,6 +227,18 @@ jobs:
                   payload.color = `#${context.payload.issue.labels[0].color}`
                 }
                 break
+              case 'issue_comment':
+                payload.link = context.payload.comment.html_url
+                payload.icon = context.payload.organization.avatar_url
+                payload.title = `New comment on #${context.payload.issue.number} ${context.payload.issue.title}`
+                payload.author_name = context.payload.sender.login
+                payload.author_avatar_url = context.payload.sender.avatar_url
+                payload.author_link = context.payload.sender.html_url
+                payload.message = `${ context.payload.comment.body }...`.substring(0, 253)
+                if (context.payload.issue.labels.length > 0) {
+                  payload.color = `#${context.payload.issue.labels[0].color}`
+                }
+                break
               case 'discussion':
                 payload.link = context.payload.discussion.html_url
                 payload.icon = context.payload.organization.avatar_url
@@ -245,6 +247,18 @@ jobs:
                 payload.author_name = context.payload.sender.login
                 payload.author_avatar_url = context.payload.sender.avatar_url
                 payload.author_link = context.payload.sender.html_url
+                if (context.payload.discussion.labels && context.payload.discussion.labels.length > 0) {
+                  payload.color = `#${context.payload.discussion.labels[0].color}`
+                }
+                break
+              case 'discussion_comment':
+                payload.link = context.payload.comment.html_url
+                payload.icon = context.payload.organization.avatar_url
+                payload.title = `New comment on #${context.payload.discussion.number} ${context.payload.discussion.title}`
+                payload.author_name = context.payload.sender.login
+                payload.author_avatar_url = context.payload.sender.avatar_url
+                payload.author_link = context.payload.sender.html_url
+                payload.message = `${ context.payload.comment.body }...`.substring(0, 253)
                 if (context.payload.discussion.labels && context.payload.discussion.labels.length > 0) {
                   payload.color = `#${context.payload.discussion.labels[0].color}`
                 }
