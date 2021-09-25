@@ -273,7 +273,7 @@ jobs:
       - id: discord
         run: echo "::set-output name=enabled::${{ secrets.DISCORD_WEBHOOK_ID != '' }}"
       - id: telegram
-        run: echo "::set-output name=enabled::${{ secrets.TELEGRAM_CHANNEL != '' }}"
+        run: echo "::set-output name=enabled::${{ secrets.TELEGRAM_TOKEN != '' }}"
 
 
   #############################################################################
