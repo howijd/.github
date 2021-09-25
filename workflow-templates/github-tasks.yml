@@ -2,12 +2,12 @@
 # NOTICE!
 # You should not modify this file in this repository. This Workflow file
 # is tested with workflow found at:
-# https://github.com/howijd/.github/blob/main/.github/workflows/github-issues.yml
+# https://github.com/howijd/.github/blob/main/.github/workflows/github-tasks.yml
 #
 # And opens self update pull request if base template is updated at:
-# https://github.com/howijd/.github/blob/main/workflow-templates/github-issues.yml
+# https://github.com/howijd/.github/blob/main/workflow-templates/github-tasks.yml
 #############################################################################
-name: GitHub issues
+name: GitHub tasks
 
 on:
   issues:
