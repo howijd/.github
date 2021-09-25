@@ -181,9 +181,11 @@ jobs:
         with:
           script: |
             const payload = {
-              eventName: github.context.eventName,
-              actor: github.context.actor,
+              eventName: context.eventName,
+              actor: context.actor,
+              payload: context.payload,
             }
+
             return payload
 
       - id: to-discord
