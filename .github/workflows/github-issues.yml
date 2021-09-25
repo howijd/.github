@@ -170,12 +170,12 @@ jobs:
   socials:
     needs:
       - issue
-      # - issue-comment
+      - issue-comment
     runs-on: ubuntu-latest
-    # if: |
-    #   !failure() && !cancelled() &&
-    #   ((github.event_name == 'issue_comment' && github.event.action == 'created') ||
-    #   (github.event_name == 'issues' && github.event.action == 'opened'))
+    if: |
+      !failure() && !cancelled() &&
+      ((github.event_name == 'issue_comment' && github.event.action == 'created') ||
+      (github.event_name == 'issues' && github.event.action == 'opened'))
     outputs:
       to-discord: ${{ steps.discord.outputs.enabled }}
       payload: ${{ steps.payload.outputs.result }}
@@ -187,7 +187,6 @@ jobs:
             const payload = {
               eventName: context.eventName,
               actor: context.actor,
-              payload: context.payload,
             }
 
             return payload
