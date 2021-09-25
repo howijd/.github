@@ -212,7 +212,7 @@ jobs:
             }
             return payload
       - id: discord
-        run: echo "::set-output name=enabled::${{ contains(secrets.*, 'DISCORD_WEBHOOK_ID') }}"
+        run: echo "::set-output name=enabled::${{ secrets.DISCORD_WEBHOOK_ID != '' }}"
       - run: echo "${{ toJSON(fromJSON(steps.payload.outputs.result)) }}"
         continue-on-error: true
 
@@ -735,8 +735,8 @@ jobs:
               .setFooter('via GitHub', 'https://github.githubassets.com/favicons/favicon.png')
               .setURL(payload.link)
             webhook.send({
-              username: '${{ github.repository.full_name }}',
-              avatarURL: '${{ github.organization.avatar_url }}',
+              username: '${{ github.event.repository.full_name }}',
+              avatarURL: '${{ github.event.organization.avatar_url }}',
               embeds: [embed],
             })
           EOF
