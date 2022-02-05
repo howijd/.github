@@ -7,6 +7,8 @@ on:
     paths:
       - '.github/workflows/manage-labels.yml'
       - 'labels.yml'
+      - '.github/actions/label-manager/action.yml'
+      - '.github/actions/label-manager/manage-labels.py'
 
 
 jobs:
