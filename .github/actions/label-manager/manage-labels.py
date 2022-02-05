@@ -106,7 +106,7 @@ for repo in result["organization"]["repositories"]["nodes"]:
     # Construct the set of labels that should be on this repo.
     
     # only run it on enabled repos
-    if len(REPOS[repo['name']]) == 0:
+    if repo['name'] not in REPOS:
         continue
         
     current_labels = {}
