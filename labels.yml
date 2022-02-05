@@ -79,3 +79,4 @@ repositories:
     - howijd
   howi:
     - howijd
+  koios-rest-go-client:
