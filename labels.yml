@@ -1,5 +1,5 @@
 groups:
-  default:
+  general:
     automation:
       description: This issue or pr is produced by automation
       color: fef2c0
@@ -70,13 +70,19 @@ groups:
 
 repositories:
   .github:
+    - general 
     - howijd
   howijd.network:
+    - general
     - howijd
   howijd.org:
+    - general
     - howijd
   howijd.com:
+    - general
     - howijd
   howi:
+    - general
     - howijd
   koios-rest-go-client:
+    - general
