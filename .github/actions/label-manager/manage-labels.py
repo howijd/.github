@@ -110,7 +110,7 @@ for repo in result["organization"]["repositories"]["nodes"]:
             current_labels.update(GROUPS[group])
     except:
         pass
-    current_labels.update(GROUPS["default"])
+    # current_labels.update(GROUPS["default"])
     current_labels_names = {l for l in current_labels.keys()}
 
     # Get the existing set of labels on the repo.
