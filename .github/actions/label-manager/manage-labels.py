@@ -104,13 +104,18 @@ print()
 # Iterate through all repos controlled by the owner.
 for repo in result["organization"]["repositories"]["nodes"]:
     # Construct the set of labels that should be on this repo.
+    
+    # only run it on enabled repos
+    if len(REPOS[repo['name']]) == 0:
+        continue
+        
     current_labels = {}
     try:
         for group in REPOS[repo['name']]:
             current_labels.update(GROUPS[group])
     except:
         pass
-    # current_labels.update(GROUPS["default"])
+    current_labels.update(GROUPS["default"])
     current_labels_names = {l for l in current_labels.keys()}
 
     # Get the existing set of labels on the repo.
@@ -146,7 +151,7 @@ for repo in result["organization"]["repositories"]["nodes"]:
 
         # To prevent actions being taken on stale fetch data, defer
         # further processing after renames happen (if they happen).
-        continue
+        REPOS[repo['name']]
 
     # Construct sets of label names to use in processing.
     labels_to_add = current_labels_names - existing_labels_names
