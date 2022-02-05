@@ -1,5 +1,5 @@
 groups:
-  general:
+  default:
     automation:
       description: This issue or pr is produced by automation
       color: fef2c0
