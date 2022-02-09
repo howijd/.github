@@ -21,6 +21,7 @@ jobs:
           - howijd/howijd.org
           - howijd/howijd.com
           - howijd/howi
+          - howijd/koios-rest-go-client
     name: ${{ matrix.repo }}
     steps:
       - uses: actions/checkout@v2

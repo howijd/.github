@@ -1,0 +1,7 @@
+{
+  "name": "Howijd Network Semantic PR",
+  "description": "Workflow template to enable Semantic PR checks.",
+  "iconName": "howijd-icon",
+  "creator": "Howijd.Network",
+  "categories": ["Automation", "Community"]
+}
