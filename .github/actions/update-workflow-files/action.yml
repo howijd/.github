@@ -27,7 +27,7 @@ runs:
     - run: for dest in ${{ inputs.repository }}/.github/workflows/*.yml; do fname="$(basename $dest)"; src="./src/workflow-templates/$fname"; if test -f $src; then cp -fr $src $dest; fi done
       shell: bash
 
-    - uses: peter-evans/create-pull-request@v3.10.1
+    - uses: peter-evans/create-pull-request@v3.12.1
       with:
         path: ${{ inputs.repository }}
         token: ${{ inputs.token }}
@@ -40,7 +40,7 @@ runs:
         delete-branch: true
         labels: enhancement,automation
         team-reviewers: maintainers
-        title: update workflow files from .github
+        title: "ci: update workflow files from .github"
         body: |
           Workflow files are tested in [howijd/.github](https://github.com/howijd/.github)
 
