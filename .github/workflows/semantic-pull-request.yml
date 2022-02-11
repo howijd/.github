@@ -35,11 +35,13 @@ jobs:
             docs
             feat
             fix
-            perf
             refactor
             revert
             style
             test
+            org
+            perf
+
           # Configure which scopes are allowed.
           scopes: |
             cli

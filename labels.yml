@@ -3,9 +3,18 @@ groups:
     automation:
       description: This issue or pr is produced by automation
       color: fef2c0
+    blocked:
+      description: Blocking issue
+      color: c1341f
     bug:
       description: Something isn't working
       color: d73a4a
+    build:
+      description: Build processes and build system
+      color: ccb456
+    ci:
+      description: CI workflows
+      color: 5f4a8c
     community:
       description: It is related to community resource
       color: f9d0c4
@@ -43,8 +52,11 @@ groups:
       description: Marketing materials and resources.
       color: B39D7F
     research:
-      description: 'Needs or is subject of research'
+      description: Needs or is subject of research
       color: BFDADC
+    refactoring:
+      description: Ccode refactoring
+      color: 0FE6ED
     security:
       description: Issues that have security implications
       color: ff0000
