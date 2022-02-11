@@ -17,7 +17,7 @@ groups:
       color: 5f4a8c
     community:
       description: It is related to community resource
-      color: f9d0c4
+      color: 92BB4F
     dependency:
       description: Project dependency
       color: B47E27
