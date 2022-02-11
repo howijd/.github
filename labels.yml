@@ -27,13 +27,13 @@ groups:
     feature:
       description: Feature request
       color: 0CA8F5
-    good first issue:
+    good-first-issue:
       description: Good for newcomers
       color: 40AA6B
     hacktoberfest:
       description: Good issues for Hacktoberfest
       color: ffa663
-    help wanted:
+    help-wanted:
       description: Extra attention is needed
       color: DFDE3C
     invalid:
@@ -54,6 +54,7 @@ groups:
     support:
       description: This is issue is rather question or supoort request
       color: C8DC3C
+
   howijd:
     hn/era:
       description: howijd.network era
@@ -70,19 +71,12 @@ groups:
 
 repositories:
   .github:
-    - general 
     - howijd
   howijd.network:
-    - general
     - howijd
   howijd.org:
-    - general
     - howijd
   howijd.com:
-    - general
     - howijd
   howi:
-    - general
     - howijd
-  koios-rest-go-client:
-    - general
