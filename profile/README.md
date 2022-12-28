@@ -1,8 +1,8 @@
 ![howijd.network](https://raw.githubusercontent.com/howijd/howijd.network/main/assets/images/howijd/src/howijd-full.svg)
 
-**CURRENT ROADMAP PHASE:** [v0.4.0](https://github.com/orgs/howijd/projects/23)
+**CURRENT ROADMAP PHASE:** [v0.5.0](https://github.com/orgs/howijd/projects/23)
 
-*Latest Release:* [v0.4.8 - *28 Dec 2022*](https://github.com/howijd/howijd.network/releases)
+*Latest Release:* [v0.4.9 - *28 Dec 2022*](https://github.com/howijd/howijd.network/releases)
 
 [![Twitter](https://img.shields.io/badge/Twitter-%231DA1F2.svg?style=for-the-badge&logo=Twitter&logoColor=white)][twitter]
 [![Discord](https://img.shields.io/badge/Discord-%235865F2.svg?style=for-the-badge&logo=discord&logoColor=white)][discord]
