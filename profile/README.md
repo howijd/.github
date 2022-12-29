@@ -2,7 +2,7 @@
 
 **CURRENT ROADMAP PHASE:** [v0.5.0](https://github.com/orgs/howijd/projects/23)
 
-*Latest Release:* [v0.4.15 - *29 Dec 2022*]("https://github.com/howijd/okram.howijd.network/releases/tag/v0.4.15)
+*Latest Release:* [v0.4.16 - *29 Dec 2022*](https://github.com/howijd/okram.howijd.network/releases/tag/v0.4.16)
 
 [![Twitter](https://img.shields.io/badge/Twitter-%231DA1F2.svg?style=for-the-badge&logo=Twitter&logoColor=white)][twitter]
 [![Discord](https://img.shields.io/badge/Discord-%235865F2.svg?style=for-the-badge&logo=discord&logoColor=white)][discord]
