@@ -71,7 +71,7 @@ groups:
       color: e88430
     perf:
       description: Performance related topic
-      color: '00000'
+      color: '191002'
 
   howijd:
     hn/era:
