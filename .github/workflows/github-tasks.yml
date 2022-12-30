@@ -48,14 +48,10 @@ on:
       - opened
 
   schedule:
-    - name: 'daily'
-      cron: '0 0 * * *' # e.g. 5min */5 * * * *
-    - name: 'weekly'
-      cron: '0 09 * * FRI'
-    - name: 'hacktoberfest-running'
-      cron: '0 0 * 10 *'
-    - name: 'hacktoberfest-over'
-      cron: '0 0 1 11 *'
+    - cron: '0 0 * * *' # e.g. 5min */5 * * * * // 'daily'
+    - cron: '0 09 * * FRI' # 'weekly'
+    - cron: '0 0 * 10 *' # 'hacktoberfest-running'
+    - cron: '0 0 1 11 *' # 'hacktoberfest-over'
 
   workflow_dispatch:
     inputs:
@@ -813,13 +809,13 @@ jobs:
           payload_str: ${{ needs.socials.outputs.payload }}
         run: |
           cat >> script.mjs << EOF
-            import { MessageEmbed, WebhookClient } from 'discord.js'
+            import { EmbedBuilder, WebhookClient } from 'discord.js'
             const { webhook_id, webhook_token, payload_str } = process.env
             const payload = JSON.parse(payload_str)
 
             const webhook = new WebhookClient({ id: webhook_id, token: webhook_token })
 
-            const embed = new MessageEmbed()
+            const embed = new EmbedBuilder()
               .setTitle(payload.title)
               .setColor(payload.color)
               .setDescription(payload.message)
