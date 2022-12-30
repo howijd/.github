@@ -1,18 +1,14 @@
 ![howijd.network](https://raw.githubusercontent.com/howijd/howijd.network/main/assets/images/howijd/src/howijd-full.svg)
 
+# **A versatile platform for the modern universe**
+
 **CURRENT ROADMAP PHASE:** [v0.5.0](https://github.com/orgs/howijd/projects/23)
 
-*Latest Release:* [v0.4.16 - *29 Dec 2022*](https://github.com/howijd/okram.howijd.network/releases/tag/v0.4.16)
+*Latest Release:* [v0.4.17 - *30 Dec 2022*](https://github.com/howijd/okram.howijd.network/releases/tag/v0.4.17)
 
 [![Twitter](https://img.shields.io/badge/Twitter-%231DA1F2.svg?style=for-the-badge&logo=Twitter&logoColor=white)][twitter]
 [![Discord](https://img.shields.io/badge/Discord-%235865F2.svg?style=for-the-badge&logo=discord&logoColor=white)][discord]
 [![Telegram](https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white)][telegram]
-
----
-
-[howijd.network] is a [decentralized autonomous organization][dao] that utilizes smart contract-based blockchain technology as its foundation. It creates a chain of [lossless compressed][lossless-compression] blocks and is compatible with various other technologies and networks. Smart contracts are the primary focus of [howijd.network], as the majority of transaction volume is between user-deployed smart contracts rather than token transactions. The network also has a decentralized governance system and uses [Extended PFP NFTs][pfp] for participation in DAO Voting. Its main priorities are minimal resource usage and the reliability, speed, security, and accuracy of transactions and computations within the network.
-
-
 
 ---
 
@@ -23,6 +19,11 @@
 |    |    |   |    |
 | **CLIENT** |  *coming soon*   |  *coming soon*   |  *coming soon*   |  *coming soon*   |
 | **NODE**   |  *coming soon*   |  *coming soon*   |  *coming soon*   |  *coming soon*   |
+
+---
+
+
+Howijd.Network is a decentralized ecosystem and DAO that aims to increase the adoption and use of secure decentralized technologies. It uses advanced technologies such as the Hydra Head protocol and the Ouroboros proof-of-stake consensus protocol to create a platform for an integrated productivity tool. Users can participate in decentralized governance by staking HOWI tokens and holding Extended PFP NFTs on staking wallets. Howijd.Network has a unique feature: deployable Addons. These offer extensive customization options and can be used for a range of applications. The platform's modular design and deployable Addons make it suitable for a wide range of domains and ideal for businesses, entrepreneurs, freelancers, and individuals.
 
 <!-- links -->
 [howijd.network]: https://howijd.network
