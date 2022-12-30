@@ -64,8 +64,14 @@ groups:
       description: Waiting for triage
       color: bfd4f2
     support:
-      description: This is issue is rather question or supoort request
+      description: This is issue is rather supoort request
       color: C8DC3C
+    addon:
+      description: Howijd.Network addons
+      color: e88430
+    perf:
+      description: Performance related topic
+      color: '00000'
 
   howijd:
     hn/era:
