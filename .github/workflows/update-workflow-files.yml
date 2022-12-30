@@ -18,8 +18,8 @@ jobs:
       matrix:
         repo:
           - howijd/howijd.network
-          - howijd/howijd.org
-          - howijd/howijd.com
+          # - howijd/howijd.org
+          # - howijd/howijd.com
           - howijd/howi
     name: ${{ matrix.repo }}
     steps:
