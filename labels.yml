@@ -92,9 +92,9 @@ repositories:
     - howijd
   howijd.network:
     - howijd
-  howijd.org:
-    - howijd
-  howijd.com:
-    - howijd
+  # howijd.org:
+  #   - howijd
+  # howijd.com:
+  #   - howijd
   howi:
     - howijd

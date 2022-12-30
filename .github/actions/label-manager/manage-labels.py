@@ -104,11 +104,11 @@ print()
 # Iterate through all repos controlled by the owner.
 for repo in result["organization"]["repositories"]["nodes"]:
     # Construct the set of labels that should be on this repo.
-    
+
     # only run it on enabled repos
     if repo['name'] not in REPOS:
         continue
-        
+
     current_labels = {}
     try:
         for group in REPOS[repo['name']]:
@@ -187,7 +187,7 @@ for repo in result["organization"]["repositories"]["nodes"]:
             githubgql.graphql(CREATE_LABEL, token=token, accept="application/vnd.github.bane-preview+json", input={
                     "repositoryId": repo["id"],
                     "name": name,
-                    "color": label_to_create['color'],
+                    "color": label_to_create['color'].replace("'", ""),
                     "description": label_to_create['description']
                 }
             )
@@ -217,7 +217,7 @@ for repo in result["organization"]["repositories"]["nodes"]:
             githubgql.graphql(UPDATE_LABEL, token=token, accept="application/vnd.github.bane-preview+json", input={
                     "id": existing_labels[name]["id"],
                     "name": name,
-                    "color": current_labels[name]["color"],
+                    "color": current_labels[name]["color"].replace("'", ""),
                     "description": current_labels[name]['description']
                 }
             )
