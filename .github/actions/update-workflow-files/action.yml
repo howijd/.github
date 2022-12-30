@@ -40,7 +40,7 @@ runs:
         delete-branch: true
         labels: enhancement,automation
         team-reviewers: maintainers
-        title: "${{ github.event.head_commit.message }}"
+        title: "ci: update workflow files from .github"
         body: |
           Workflow files are tested in [howijd/.github](https://github.com/howijd/.github)
 
