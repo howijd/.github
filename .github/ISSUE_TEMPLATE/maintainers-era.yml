@@ -2,11 +2,12 @@ name: maintainers - (era) template
 description: (Maintainers Only!) Form to draft new howijd.network era.
 title: "e.g. Okram era"
 labels:
-  - hn/era
+  - dao/era
   - draft
 
-assignees:
-  - howijd/maintainers
+# assignees:
+#   - howijd/maintainers
+
 body:
   - type: markdown
     attributes:

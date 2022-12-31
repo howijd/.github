@@ -2,10 +2,10 @@ name: maintainers - (story) template
 description: (Maintainers Only!) Form to draft new howijd.network story.
 title: "e.g. Implement feature x"
 labels:
-  - hn/story
+  - dao/story
   - draft
-assignees:
-  - howijd/maintainers
+# assignees:
+#   - howijd/maintainers
 
 body:
   - type: markdown

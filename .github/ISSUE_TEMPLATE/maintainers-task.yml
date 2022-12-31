@@ -2,10 +2,10 @@ name: maintainers - (task) template
 description: (Maintainers Only!) Form to draft new howijd.network task.
 title: "e.g. Fix bug, enhance, implement feature x"
 labels:
-  - hn/task
+  - dao/task
   - draft
-assignees:
-  - howijd/maintainers
+# assignees:
+#   - howijd/maintainers
 
 body:
   - type: markdown
@@ -38,7 +38,7 @@ body:
       value: |
         - [ ] ... # e.g howiijd/howiijd.org#x
     validations:
-      required: true
+      required: false
 
   - type: textarea
     id: resource-links
