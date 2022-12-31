@@ -79,10 +79,10 @@ jobs:
     outputs:
       user-issues-total: ${{ steps.set-from-github-graphql.outputs.totalCount }}
       zen: ${{ steps.set-from-github-api.outputs.zen }}
-      issue-is-era: ${{ toJSON(contains(github.event.issue.labels.*.name, 'hn/era')) }}
-      issue-is-mile: ${{ toJSON(contains(github.event.issue.labels.*.name, 'hn/mile')) }}
-      issue-is-story: ${{ toJSON(contains(github.event.issue.labels.*.name, 'hn/story')) }}
-      issue-is-task: ${{ toJSON(contains(github.event.issue.labels.*.name, 'hn/task')) }}
+      issue-is-era: ${{ toJSON(contains(github.event.issue.labels.*.name, 'dao/era')) }}
+      issue-is-mile: ${{ toJSON(contains(github.event.issue.labels.*.name, 'dao/era')) }}
+      issue-is-story: ${{ toJSON(contains(github.event.issue.labels.*.name, 'dao/era')) }}
+      issue-is-task: ${{ toJSON(contains(github.event.issue.labels.*.name, 'dao/era')) }}
     steps:
       # just print issue payload
       - name: issue info
@@ -94,7 +94,7 @@ jobs:
 
       - name: set from github graphql
         id: set-from-github-graphql
-        uses: actions/github-script@v5
+        uses: actions/github-script@v6
         with:
           script: |
             const user = context.payload.sender.login
@@ -118,7 +118,7 @@ jobs:
 
       - name: set from github api
         id: set-from-github-api
-        uses: actions/github-script@v5
+        uses: actions/github-script@v6
         with:
           script: |
             // RANDOM SENTENCE
@@ -135,7 +135,7 @@ jobs:
     steps:
       - name: set from github api
         id: set-from-github-api
-        uses: actions/github-script@v5
+        uses: actions/github-script@v6
         with:
           script: |
             // RANDOM SENTENCE
@@ -223,7 +223,7 @@ jobs:
       payload: ${{ steps.payload.outputs.result }}
     steps:
       - id: payload
-        uses: actions/github-script@v5
+        uses: actions/github-script@v6
         with:
           script: |
             const payload = {
@@ -306,8 +306,8 @@ jobs:
 
       - id: discord
         run: echo "::set-output name=enabled::${{ secrets.DISCORD_WEBHOOK_ID != '' }}"
-      - id: telegram
-        run: echo "::set-output name=enabled::${{ secrets.TELEGRAM_TOKEN != '' }}"
+      # - id: telegram
+      #   run: echo "::set-output name=enabled::${{ secrets.TELEGRAM_TOKEN != '' }}"
 
 
   #############################################################################
@@ -417,7 +417,7 @@ jobs:
             !fromJSON(needs.issue.outputs.issue-is-mile)  ||
             !fromJSON(needs.issue.outputs.issue-is-story))
         id: belongs-to-feature
-        uses: actions/github-script@v5
+        uses: actions/github-script@v6
         with:
           script: |
             const events = await github.rest.issues.listEventsForTimeline({
@@ -437,7 +437,7 @@ jobs:
               .filter((label) => label.name.toLowerCase() === 'feature').length > 0)
 
             if (belongs.length > 0) {
-              core.setOutput('add_labels', 'hn/task')
+              core.setOutput('add_labels', 'dao/era')
             }
 
   #############################################################################
@@ -513,7 +513,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - if: github.event.action == 'opened'
-        uses: actions/github-script@v5
+        uses: actions/github-script@v6
         with:
           script: |
             github.rest.reactions.createForIssue({
@@ -541,7 +541,7 @@ jobs:
           stale-issue-message: 'This issue has no activity for a while. It will be closed if no action is taken in near future'
           close-issue-message: 'This issue was closed since there was no activity after it was marked stale.'
           stale-issue-label: 'stale'
-          exempt-issue-labels: 'bug,security,hn/era,hn/mile,hn/task'
+          exempt-issue-labels: 'bug,security,dao/era,dao/era,dao/era'
           remove-issue-stale-when-updated: true
           labels-to-add-when-unstale: 'triage'
           exempt-all-issue-milestones: true
@@ -588,7 +588,7 @@ jobs:
           echo "${{ needs.issue.outputs.issue-is-mile }}"
       - name: set from github api
         id: set-from-github-api
-        uses: actions/github-script@v5
+        uses: actions/github-script@v6
         with:
           script: |
             try {
@@ -626,7 +626,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: set from github graphql
         id: set-from-github-graphql
-        uses: actions/github-script@v5
+        uses: actions/github-script@v6
         with:
           script: |
             const repo = context.payload.repository.name
@@ -705,7 +705,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: set from github graphql
         id: set-from-github-graphql
-        uses: actions/github-script@v5
+        uses: actions/github-script@v6
         with:
           script: |
             const repos = [
@@ -799,7 +799,7 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ !failure() && !cancelled() && needs.socials.outputs.discord-enabled == 'true'  }}
     steps:
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
           node-version: '16'
       - run: npm install discord.js
@@ -834,20 +834,20 @@ jobs:
           EOF
           node ./script.mjs
 
-  telegram:
-    needs: socials
-    runs-on: ubuntu-latest
-    if: ${{ !failure() && !cancelled() && needs.socials.outputs.telegram-enabled == 'true'  }}
-    steps:
-      - uses: appleboy/telegram-action@master
-        with:
-          to: '-1001195004886'
-          token: ${{ secrets.TELEGRAM_TOKEN }}
-          format: markdown
-          disable_web_page_preview: true
-          message: |
-            [${{ fromJSON(needs.socials.outputs.payload).title }}](${{ fromJSON(needs.socials.outputs.payload).link }})
+  # telegram:
+  #   needs: socials
+  #   runs-on: ubuntu-latest
+  #   if: ${{ !failure() && !cancelled() && needs.socials.outputs.telegram-enabled == 'true'  }}
+  #   steps:
+  #     - uses: appleboy/telegram-action@master
+  #       with:
+  #         to: '-1001195004886'
+  #         token: ${{ secrets.TELEGRAM_TOKEN }}
+  #         format: markdown
+  #         disable_web_page_preview: true
+  #         message: |
+  #           [${{ fromJSON(needs.socials.outputs.payload).title }}](${{ fromJSON(needs.socials.outputs.payload).link }})
 
-            ${{ fromJSON(needs.socials.outputs.payload).message }}"
+  #           ${{ fromJSON(needs.socials.outputs.payload).message }}"
 
-            by [@${{ fromJSON(needs.socials.outputs.payload).author_name }}](${{ fromJSON(needs.socials.outputs.payload).author_link }})
+  #           by [@${{ fromJSON(needs.socials.outputs.payload).author_name }}](${{ fromJSON(needs.socials.outputs.payload).author_link }})
