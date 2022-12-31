@@ -75,16 +75,16 @@ groups:
 
   howijd:
     dao/era:
-      description: This is primary tracking issue for howijd.network Era, There MUST be only ONE such issue for Era.
+      description: Primary tracking issue for howijd.network Era, There MUST be only ONE such issue for Era.
       color: E88430
     dao/mile:
-      description: This is primary tracking issue forhowijd.network Milestone, There MUST be only ONE such issue for Milestone.
+      description: Primary tracking issue for milestones, There MUST be only ONE such issue for milestone.
       color: 99A663
     dao/story:
-      description: This is tracking issue for topic in howijd.network DAO which consists one-to-many sub tasks before completed.
+      description: Tracking issue for topic in howijd.network DAO which may have one-to-many sub tasks.
       color: 99A660
     dao/task:
-      description: This howijd.network DAO task, such tasks may require consensus from community before the can be resolved.
+      description: howijd.network DAO task, such tasks may require consensus from community before the can be closed.
       color: 55889F
 
 repositories:
